@@ -11,7 +11,7 @@ L'application devra être développé en modules. Voici la liste des principaux 
 * [Son](#son)
 
 ## Encadrant de ce projet :
-* Pierre CRESCENZO
+* Pierre CRESCENZO (pierre.crescenzo@unice.fr)
 
 ## Liste des membres :
 * Léonard DEI
