@@ -19,7 +19,9 @@ L'application devra être développé en modules. Voici la liste des principaux 
 * Karl FERRERO (karl.ferrero.kf@gmail.com)
 * Thomas VALVERDE (valverd.thomas@gmail.com)
 
-
+## Organisation :
+Deux personnes vont s'occuper du développement du noyau de l'application.
+Les deux autres travailleront sur le développement d'un module.
 
 <a id="texte"/>
 
