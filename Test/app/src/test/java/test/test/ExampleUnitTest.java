@@ -1,4 +1,4 @@
-package com.miage.m1.capture_besoins;
+package test.test;
 
 import org.junit.Test;
 
