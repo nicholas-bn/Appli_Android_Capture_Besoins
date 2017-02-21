@@ -1,21 +1,27 @@
-package test.test;
+package capture_besoins.plugins.texte_simple;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Environment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainActivity extends AppCompatActivity {
+import capture_besoins.main.R;
+
+/**
+ * Created by Karl on 21/02/2017.
+ */
+
+public class Plugin_texte_simple {
+    // Activité principale
+    Activity activity;
 
     // Boutton pour sauvegarder le fichier
     Button save_Button;
@@ -29,13 +35,10 @@ public class MainActivity extends AppCompatActivity {
     // Nom temporaire du projet où on ajout un fichier texte
     final String varTempoNomProjet = "projetTest";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public Plugin_texte_simple(AppCompatActivity activity) {
 
         // On récupére le button de sauvegarde
-        save_Button = (Button) findViewById(R.id.button_save);
+        save_Button = (Button) activity.findViewById(R.id.button_save);
 
         // On y ajoute un listener
         save_Button.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Lorsqu'on appuit sur le bouton Save
-    public void choix_nom_du_Fichier(View v){
+    public void choix_nom_du_Fichier(View v) {
 
         // Dialogue pour choisir le nom du fichier à sauvegarder
         AlertDialog.Builder building = new AlertDialog.Builder(v.getContext());
@@ -84,13 +87,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Sauvegarde du fichier
-    public void sauvegarde_Du_Fichier(String nomFichier){
+    public void sauvegarde_Du_Fichier(String nomFichier) {
 
         // On vérifie si on nous a donné une extension, sinon on la rajoute
         Pattern p = Pattern.compile("^.*\\.[^\\\\]+$");
         Matcher m = p.matcher(nomFichier);
-        if( ! m.matches()){
-            System.err.println("Nom du fichier texte ("+nomFichier+") donné sans extenxion, on rajoute \".txt\".");
+        if (!m.matches()) {
+            System.err.println("Nom du fichier texte (" + nomFichier + ") donné sans extenxion, on rajoute \".txt\".");
             nomFichier += ".txt";
         }
 
@@ -98,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Nom du Fichier : " + nomFichier);
 
         // On récupére et affiche le contenu Texte
-        contenuTexte = (AutoCompleteTextView)  findViewById(R.id.autoCompleteTextView_contenuFichier);
+        contenuTexte = (AutoCompleteTextView) activity.findViewById(R.id.autoCompleteTextView_contenuFichier);
         System.out.println("Contenu Texte : " + contenuTexte.getText().toString());
 
         // On récupére le dossier où l'on se situe
-        File racineApp = getFilesDir();
+        File racineApp = activity.getFilesDir();
         System.out.println("Racine de l'application : " + racineApp.toString());
 
         // Dossier contenant les fichiers textes
@@ -110,15 +113,11 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Dossier Texte : " + dossierTexte);
 
         // Si il existe pas on le créé
-        if( ! dossierTexte.exists() )
+        if (!dossierTexte.exists())
             dossierTexte.mkdirs();
 
         // On créé un file pour le fichier à créé
         File fichierTexte = new File(dossierTexte + File.separator + nomFichier);
-
-
-
-
 
 
         // TODO Récupérer l'id google user et le nom du projet pour faire data/.../files/<user>/<projet>/...

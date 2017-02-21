@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="test.test">
+    package="capture_besoins.main">
 
     <application
         android:allowBackup="true"
@@ -8,7 +8,7 @@
         android:label="Texte"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="capture_besoins.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

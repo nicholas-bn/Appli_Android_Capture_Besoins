@@ -1,4 +1,4 @@
-package test.test;
+package capture_besoins.main;
 
 import org.junit.Test;
 
