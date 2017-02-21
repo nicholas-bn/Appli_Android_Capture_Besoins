@@ -27,4 +27,12 @@
         android:id="@+id/button_save"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="LOAD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/button_save"
+        android:id="@+id/button_load" />
 </RelativeLayout>

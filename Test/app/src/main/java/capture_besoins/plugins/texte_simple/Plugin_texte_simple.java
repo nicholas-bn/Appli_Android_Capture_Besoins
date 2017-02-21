@@ -25,6 +25,9 @@ public class Plugin_texte_simple {
     // Boutton pour sauvegarder le fichier
     Button save_Button;
 
+    // Boutton pour sauvegarder le fichier
+    Button load_Button;
+
     // Texte du fichier
     AutoCompleteTextView contenuTexte;
 
