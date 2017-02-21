@@ -9,14 +9,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import capture_besoins.main.R;
 
-/**
- * Created by Karl on 21/02/2017.
- */
 
 public class Plugin_texte_simple {
     // Activité principale
@@ -52,10 +51,52 @@ public class Plugin_texte_simple {
                 choix_nom_du_Fichier(v);
             }
         });
+
+        // On récupére le bouton de chargement et d'edit de fichier texte
+        load_Button = (Button) activity.findViewById(R.id.button_load);
+
+        // On y ajoute un listener
+        load_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ouverture_fichier_texte(v);
+            }
+        });
     }
 
-    // Lorsqu'on appuit sur le bouton Save
-    public void choix_nom_du_Fichier(View v) {
+    // Lorsqu'on appuit sur le bouton LOAD
+    private void ouverture_fichier_texte(View v) {
+
+        // Dialogue pour choisir le nom du fichier à ouvrir
+        AlertDialog.Builder building = new AlertDialog.Builder(v.getContext());
+
+        // Titre
+        building.setTitle("Choisissez un fichier : ");
+
+        // Définir le comportement du bouton "OK"
+        building.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        // Définir le comportement du bouton "Annuler"
+        building.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            // Si il appuie sur Annuler on fait rien
+            return;
+            }
+        });
+
+        // On le créé et on l'affiche
+        building.create();
+        building.show();
+    }
+
+    // Lorsqu'on appuit sur le bouton SAVE
+    private void choix_nom_du_Fichier(View v) {
 
         // Dialogue pour choisir le nom du fichier à sauvegarder
         AlertDialog.Builder building = new AlertDialog.Builder(v.getContext());
@@ -72,8 +113,8 @@ public class Plugin_texte_simple {
         building.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // On envoie le nom du fichier fourni sous le format String
-                sauvegarde_Du_Fichier(myAutoCompleteChoixNomFichier.getText().toString());
+            // On envoie le nom du fichier fourni sous le format String
+            sauvegarde_Du_Fichier(myAutoCompleteChoixNomFichier.getText().toString());
             }
         });
 
@@ -81,8 +122,8 @@ public class Plugin_texte_simple {
         building.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Si il appuie sur Annuler on fait rien
-                return;
+            // Si il appuie sur Annuler on fait rien
+            return;
             }
         });
 
@@ -92,7 +133,7 @@ public class Plugin_texte_simple {
     }
 
     // Sauvegarde du fichier
-    public void sauvegarde_Du_Fichier(String nomFichier) {
+    private void sauvegarde_Du_Fichier(String nomFichier) {
 
         // On vérifie si on nous a donné une extension, sinon on la rajoute
         Pattern p = Pattern.compile("^.*\\.[^\\\\]+$");
@@ -124,6 +165,24 @@ public class Plugin_texte_simple {
         // On créé un file pour le fichier à créé
         File fichierTexte = new File(dossierTexte + File.separator + nomFichier);
 
+        // On écrit le fichier
+        try {
+            PrintWriter ecritureDuFichierTexte = new PrintWriter(fichierTexte);
+            ecritureDuFichierTexte.println(contenuTexte.getText().toString());
+            ecritureDuFichierTexte.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("Erreur lors de l'écriture du fichier : \"" + fichierTexte + "\"");
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+
+
+
 
         // TODO Récupérer l'id google user et le nom du projet pour faire data/.../files/<user>/<projet>/...
         // TODO Vérifier au lancement de l'application si il y a une carte SD dispo et définir un booléen
@@ -134,7 +193,6 @@ public class Plugin_texte_simple {
         } else { // Si on dispose uniquement du stockage interne
 
         }
-
 
 /*        // On informe l'utilisateur si la sauvegarde a été un échec ou non
         AlertDialog.Builder retourSauvegardeSuccesOuEchec = new AlertDialog.Builder(contenuTexte.getContext());
