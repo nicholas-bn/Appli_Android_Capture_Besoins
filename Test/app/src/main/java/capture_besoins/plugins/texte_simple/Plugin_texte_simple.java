@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -35,7 +34,10 @@ public class Plugin_texte_simple {
     // Nom temporaire du projet où on ajout un fichier texte
     final String varTempoNomProjet = "projetTest";
 
-    public Plugin_texte_simple(AppCompatActivity activity) {
+    public Plugin_texte_simple(Activity activity) {
+
+        // On récupère l'activity
+        this.activity = activity;
 
         // On récupére le button de sauvegarde
         save_Button = (Button) activity.findViewById(R.id.button_save);

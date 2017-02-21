@@ -9,4 +9,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/btn_createProjet"
         android:elevation="0dp" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listProjets" />
 </LinearLayout>
