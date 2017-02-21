@@ -7,14 +7,21 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ListView;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import capture_besoins.main.R;
+
 
 
 public class Plugin_texte_simple {
@@ -36,7 +43,23 @@ public class Plugin_texte_simple {
     // Nom temporaire du projet où on ajout un fichier texte
     final String varTempoNomProjet = "projetTest";
 
+    // Dossier des fichiers textes
+    private File dossierTexte;
+
+    // On récupére le dossier où l'on se situe
+    private File racineApp;
+
+
+
     public Plugin_texte_simple(Activity activity) {
+
+        // On récupére le dossier où l'on se situe
+        racineApp = activity.getFilesDir();
+        System.out.println("Racine de l'application : " + racineApp.toString());
+
+        // Dossier contenant les fichiers textes
+        dossierTexte = new File(racineApp.getAbsolutePath() + File.separator + varTempoNomUser + File.separator + varTempoNomProjet + File.separator + "Text");
+        System.out.println("Dossier Texte : " + dossierTexte);
 
         // On récupère l'activity
         this.activity = activity;
@@ -62,37 +85,104 @@ public class Plugin_texte_simple {
                 ouverture_fichier_texte(v);
             }
         });
+
+        // On récupére et affiche le contenu Texte
+        contenuTexte = (AutoCompleteTextView) activity.findViewById(R.id.autoCompleteTextView_contenuFichier);
+        System.out.println("Contenu Texte : " + contenuTexte.getText().toString());
     }
+
+
 
     // Lorsqu'on appuit sur le bouton LOAD
     private void ouverture_fichier_texte(View v) {
 
         // Dialogue pour choisir le nom du fichier à ouvrir
-        AlertDialog.Builder building = new AlertDialog.Builder(v.getContext());
+        final AlertDialog.Builder building = new AlertDialog.Builder(v.getContext());
 
-        // Titre
-        building.setTitle("Choisissez un fichier : ");
+        // On récupére tous les fichiers texte déja créés précédemment
+        File[] listeFichierTexte = dossierTexte.listFiles();
 
-        // Définir le comportement du bouton "OK"
-        building.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        // On vérifie si il y a des fichiers textes ou non
+        if(listeFichierTexte.length == 0 ){
 
+            building.setMessage("Aucun fichier texte à ouvrir dans ce projet.");
+
+        } else if (listeFichierTexte.length > 0) {
+
+            // Titre
+            building.setTitle("Choisissez un fichier : ");
+
+            // On créé la liste des noms de fichiers
+            ArrayList<String> listNomFichier = new ArrayList<String>();
+
+            // On y ajoute les noms de fichiers présent
+            for(File f : listeFichierTexte){
+                listNomFichier.add(f.getName());
             }
-        });
 
-        // Définir le comportement du bouton "Annuler"
-        building.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            // Si il appuie sur Annuler on fait rien
-            return;
-            }
-        });
+            // On ne se préoccupe pas de déclencher un event quand l'user coche une case
+            building.setSingleChoiceItems(listNomFichier.toArray(new CharSequence[listNomFichier.size()]), 0, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    return;
+                }
+            });
+
+            // Définir le comportement du bouton "OK"
+            building.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // On récupére les vues de l'alertdialog
+                    ListView lw = ((AlertDialog)dialog).getListView();
+
+                    // On récupére la case coché
+                    String checkedItem = (String) lw.getAdapter().getItem(lw.getCheckedItemPosition());
+                    charger_fichier_texte(checkedItem);
+                }
+            });
+
+            // Définir le comportement du bouton "Annuler"
+            building.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Si il appuie sur Annuler on fait rien
+                    return;
+                }
+            });
+
+        }
 
         // On le créé et on l'affiche
         building.create();
         building.show();
+    }
+
+    private void charger_fichier_texte(String nomFichier){
+
+        // On construit l'adresse du fichier à charger
+        File fichierACharger = new File(dossierTexte.getAbsolutePath() + File.separator + nomFichier);
+        System.out.println("fichierACharger : " + fichierACharger);
+
+        // On créé un StringBuilder pour gagner de la perf
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            // On bufferise le contenu du fichier
+            String line = null;
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fichierACharger));
+
+            // On lit ligne par ligne
+            while ((line = bufferedReader.readLine()) != null)
+            {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(sb.toString());
+        contenuTexte.setText(sb.toString());
+
     }
 
     // Lorsqu'on appuit sur le bouton SAVE
@@ -132,6 +222,8 @@ public class Plugin_texte_simple {
         building.show();
     }
 
+
+
     // Sauvegarde du fichier
     private void sauvegarde_Du_Fichier(String nomFichier) {
 
@@ -145,18 +237,6 @@ public class Plugin_texte_simple {
 
         // On affiche le nom du fichier choisi
         System.out.println("Nom du Fichier : " + nomFichier);
-
-        // On récupére et affiche le contenu Texte
-        contenuTexte = (AutoCompleteTextView) activity.findViewById(R.id.autoCompleteTextView_contenuFichier);
-        System.out.println("Contenu Texte : " + contenuTexte.getText().toString());
-
-        // On récupére le dossier où l'on se situe
-        File racineApp = activity.getFilesDir();
-        System.out.println("Racine de l'application : " + racineApp.toString());
-
-        // Dossier contenant les fichiers textes
-        File dossierTexte = new File(racineApp.getAbsolutePath() + File.separator + varTempoNomUser + File.separator + varTempoNomProjet + File.separator + "Text");
-        System.out.println("Dossier Texte : " + dossierTexte);
 
         // Si il existe pas on le créé
         if (!dossierTexte.exists())
