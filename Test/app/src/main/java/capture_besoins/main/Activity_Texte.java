@@ -7,23 +7,24 @@ import android.support.v7.app.AppCompatActivity;
 import capture_besoins.plugins.texte_simple.Plugin_texte_simple;
 import capture_besoins.projet.GestionProjet;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by Karl on 22/02/2017.
+ */
 
-    Plugin_texte_simple pluginTexteSimple;
-
-    GestionProjet gestionProjet;
+public class Activity_Texte extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
+        Bundle b = getIntent().getExtras();
+        String value = ""; // or other values
+        if (b != null)
+            value = b.getString("nom");
 
-
-        setContentView(R.layout.activity_projet);
-        gestionProjet = new GestionProjet(this);
-
-        //setContentView(R.layout.activity_main);
-        //pluginTexteSimple = new Plugin_texte_simple(this);
+        System.out.println("+++++++++ ++++ " + value);
+        new Plugin_texte_simple(this, value);
 
         // MET EN COMMENTAIRE CELUI QUE TU NUTILISES PAS SINON CA PLANTE
 

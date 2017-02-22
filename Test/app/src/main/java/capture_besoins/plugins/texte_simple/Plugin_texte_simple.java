@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -50,8 +51,8 @@ public class Plugin_texte_simple {
     // Variable temporaire du nom/id utilisateur
     final String varTempoNomUser = "userTest";
 
-    // Nom temporaire du projet où on ajout un fichier texte
-    final String varTempoNomProjet = "projetTest";
+    // Nom du projet où on ajoute un fichier texte
+    String nomProjet = "projetTest";
 
     // Dossier des fichiers textes
     private File dossierTexte;
@@ -60,18 +61,22 @@ public class Plugin_texte_simple {
     private File racineApp;
 
 
-    public Plugin_texte_simple(Activity activity) {
+    public Plugin_texte_simple(Activity activity, String nomProjet) {
+
+        // On récupère l'activity
+        this.activity = activity;
+
+        // On récupère le nom de projet
+        this.nomProjet = nomProjet;
 
         // On récupére le dossier où l'on se situe
         racineApp = activity.getFilesDir();
         System.out.println("Racine de l'application : " + racineApp.toString());
 
         // Dossier contenant les fichiers textes
-        dossierTexte = new File(racineApp.getAbsolutePath() + File.separator + varTempoNomUser + File.separator + varTempoNomProjet + File.separator + "Text");
+        dossierTexte = new File(racineApp.getAbsolutePath() + File.separator + varTempoNomUser + File.separator + this.nomProjet + File.separator + "Text");
         System.out.println("Dossier Texte : " + dossierTexte);
 
-        // On récupère l'activity
-        this.activity = activity;
 
         // On récupére le button de sauvegarde
         save_Button = (Button) activity.findViewById(R.id.button_save);
@@ -117,7 +122,7 @@ public class Plugin_texte_simple {
         if (contenuTexte.getText().toString().equals("")) {
             hasBeenLoaded = false;
             nameUsed = "";
-        // Si il y a encore du texte on demande confirmation
+            // Si il y a encore du texte on demande confirmation
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
 
@@ -330,6 +335,7 @@ public class Plugin_texte_simple {
         // On le créé et on l'affiche
         retourSauvegardeSuccesOuEchec.create();
         retourSauvegardeSuccesOuEchec.show();*/
-
+        Toast.makeText(activity.getApplicationContext(),
+                "Fichier '" + nomFichier + "'sauvegardé", Toast.LENGTH_SHORT).show();
     }
 }

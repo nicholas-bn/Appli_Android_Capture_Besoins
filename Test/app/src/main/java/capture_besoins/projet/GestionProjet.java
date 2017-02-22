@@ -1,22 +1,30 @@
 package capture_besoins.projet;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import capture_besoins.main.Activity_Texte;
+import capture_besoins.main.MainActivity;
 import capture_besoins.main.R;
+import capture_besoins.plugins.texte_simple.Plugin_texte_simple;
 
 /**
  * Created by Karl on 21/02/2017.
  */
 
-public class GestionProjet implements View.OnClickListener {
+public class GestionProjet implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     //Activité principale
     private Activity activity;
@@ -25,7 +33,7 @@ public class GestionProjet implements View.OnClickListener {
     private Button btn_creerProjet;
 
     // Liste des projets
-    private ListView list_projets;
+    private ListView listView_projets;
 
     // Variable temporaire du nom/id utilisateur
     private final String varTempoNomUser = "userTest";
@@ -43,7 +51,7 @@ public class GestionProjet implements View.OnClickListener {
         btn_creerProjet.setOnClickListener(this);
 
         // On récupère le ListView des projets
-        list_projets = (ListView) activity.findViewById(R.id.listProjets);
+        listView_projets = (ListView) activity.findViewById(R.id.listProjets);
 
         // On remplit la liste des projets
         remplirListeProjets();
@@ -53,26 +61,22 @@ public class GestionProjet implements View.OnClickListener {
 
     private void remplirListeProjets() {
         // On récupère la liste des Projets déja créés
-        List<File> listProjets = getProjets();
+        List<String> listNomProjets = getNomProjets();
 
-        List<String> listNomProjets = new ArrayList<>();
-
-        for (File projet : listProjets) {
-            listNomProjets.add(projet.getName());
-        }
-
-        //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
-        ArrayAdapter<String> adapter;
-
-        adapter = new ArrayAdapter<String>
+        // Adapter qui contient les éléments de la liste
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (activity, android.R.layout.simple_list_item_1, listNomProjets);
 
-        list_projets.setAdapter(adapter);
+        // On set l'adapter à la ListView
+        listView_projets.setAdapter(adapter);
+
+        // On ajoute un listener
+        listView_projets.setOnItemClickListener(this);
 
     }
 
-    private List<File> getProjets() {
-        ArrayList<File> listProjets = new ArrayList<File>();
+    private List<String> getNomProjets() {
+        ArrayList<String> listProjets = new ArrayList<String>();
 
         // Racine de l'application
         File racineApp = activity.getFilesDir();
@@ -87,11 +91,8 @@ public class GestionProjet implements View.OnClickListener {
         for (File file : files) {
             // Si c'est un répertoire
             if (file.isDirectory()) {
-                listProjets.add(file);
+                listProjets.add(file.getName());
             }
-
-            System.out.println("---------------------" + file.getName());
-
         }
         return listProjets;
     }
@@ -105,5 +106,25 @@ public class GestionProjet implements View.OnClickListener {
         // TODO 2 : Créer répertoire du projet
 
         // TODO 3 : Ouvrir projet créé
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // - Clique sur un élément de la liste des Projets :
+
+
+        // Récupération du nom du projet sélectionné
+        String nomProjet = ((TextView) view).getText().toString();
+
+        Toast.makeText(activity.getApplicationContext(),
+                nomProjet, Toast.LENGTH_SHORT).show();
+
+        //
+        Intent i = new Intent(activity, Activity_Texte.class);
+        Bundle b = new Bundle();
+        b.putString("nom", nomProjet); //Your id
+        i.putExtras(b); //Put your id to your next Intent
+        activity.startActivity(i);
+
     }
 }
