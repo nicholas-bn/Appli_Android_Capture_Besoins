@@ -17,15 +17,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import capture_besoins.main.R;
 
 
-
 public class Plugin_texte_simple {
+
     // Activité principale
     Activity activity;
 
@@ -34,6 +33,16 @@ public class Plugin_texte_simple {
 
     // Boutton pour sauvegarder le fichier
     Button load_Button;
+
+    // Boutton pour clear la zone texte pour un nouveau fichier
+    Button new_Button;
+
+    // Si c'est un fichier load on a pas besoin de
+    // fournir un nom de fichier à la sauvegarde
+    private boolean hasBeenLoaded = false;
+
+    // En liaison avec "hasBeenLoaded" pour enregistrer le nom du fichier load
+    private String nameUsed = "";
 
     // Texte du fichier
     EditText contenuTexte;
@@ -49,7 +58,6 @@ public class Plugin_texte_simple {
 
     // On récupére le dossier où l'on se situe
     private File racineApp;
-
 
 
     public Plugin_texte_simple(Activity activity) {
@@ -76,6 +84,17 @@ public class Plugin_texte_simple {
             }
         });
 
+        // On récupére le button new
+        new_Button = (Button) activity.findViewById(R.id.button_new);
+
+        // On y ajoute un listener
+        new_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clean_and_new(v);
+            }
+        });
+
         // On récupére le bouton de chargement et d'edit de fichier texte
         load_Button = (Button) activity.findViewById(R.id.button_load);
 
@@ -92,7 +111,39 @@ public class Plugin_texte_simple {
         System.out.println("Contenu Texte : " + contenuTexte.getText().toString());
     }
 
+    private void clean_and_new(View v) {
 
+        // Si texte vide
+        if (contenuTexte.getText().toString().equals("")) {
+            hasBeenLoaded = false;
+            nameUsed = "";
+        // Si il y a encore du texte on demande confirmation
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+
+            builder.setTitle("Attention");
+            builder.setMessage("Êtes-vous sûr de créer un nouveau texte ?");
+
+            builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    hasBeenLoaded = false;
+                    nameUsed = "";
+                    contenuTexte.setText("");
+                }
+            });
+            builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    return;
+                }
+            });
+
+            builder.create();
+            builder.show();
+        }
+
+    }
 
     // Lorsqu'on appuit sur le bouton LOAD
     private void ouverture_fichier_texte(View v) {
@@ -104,7 +155,7 @@ public class Plugin_texte_simple {
         File[] listeFichierTexte = dossierTexte.listFiles();
 
         // On vérifie si il y a des fichiers textes ou non
-        if(listeFichierTexte.length == 0 ){
+        if (listeFichierTexte.length == 0) {
 
             building.setMessage("Aucun fichier texte à ouvrir dans ce projet.");
 
@@ -117,7 +168,7 @@ public class Plugin_texte_simple {
             ArrayList<String> listNomFichier = new ArrayList<String>();
 
             // On y ajoute les noms de fichiers présent
-            for(File f : listeFichierTexte){
+            for (File f : listeFichierTexte) {
                 listNomFichier.add(f.getName());
             }
 
@@ -134,7 +185,7 @@ public class Plugin_texte_simple {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // On récupére les vues de l'alertdialog
-                    ListView lw = ((AlertDialog)dialog).getListView();
+                    ListView lw = ((AlertDialog) dialog).getListView();
 
                     // On récupére la case coché
                     String checkedItem = (String) lw.getAdapter().getItem(lw.getCheckedItemPosition());
@@ -158,7 +209,7 @@ public class Plugin_texte_simple {
         building.show();
     }
 
-    private void charger_fichier_texte(String nomFichier){
+    private void charger_fichier_texte(String nomFichier) {
 
         // On construit l'adresse du fichier à charger
         File fichierACharger = new File(dossierTexte.getAbsolutePath() + File.separator + nomFichier);
@@ -173,8 +224,7 @@ public class Plugin_texte_simple {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fichierACharger));
 
             // On lit ligne par ligne
-            while ((line = bufferedReader.readLine()) != null)
-            {
+            while ((line = bufferedReader.readLine()) != null) {
                 sb.append(line);
                 sb.append("\n");
             }
@@ -182,8 +232,12 @@ public class Plugin_texte_simple {
             e.printStackTrace();
         }
 
+        // On rempli le texte
         System.out.println(sb.toString());
         contenuTexte.setText(sb.toString());
+
+        // On retient que le fichier a été chargé et son nom
+        // hasBeenLoaded = true;
 
     }
 
@@ -207,8 +261,8 @@ public class Plugin_texte_simple {
         building.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-            // On envoie le nom du fichier fourni sous le format String
-            sauvegarde_Du_Fichier(myAutoCompleteChoixNomFichier.getText().toString());
+                // On envoie le nom du fichier fourni sous le format String
+                sauvegarde_Du_Fichier(myAutoCompleteChoixNomFichier.getText().toString());
             }
         });
 
@@ -216,8 +270,8 @@ public class Plugin_texte_simple {
         building.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-            // Si il appuie sur Annuler on fait rien
-            return;
+                // Si il appuie sur Annuler on fait rien
+                return;
             }
         });
 
@@ -225,7 +279,6 @@ public class Plugin_texte_simple {
         building.create();
         building.show();
     }
-
 
 
     // Sauvegarde du fichier
@@ -258,14 +311,6 @@ public class Plugin_texte_simple {
             System.err.println("Erreur lors de l'écriture du fichier : \"" + fichierTexte + "\"");
             e.printStackTrace();
         }
-
-
-
-
-
-
-
-
 
 
         // TODO Récupérer l'id google user et le nom du projet pour faire data/.../files/<user>/<projet>/...

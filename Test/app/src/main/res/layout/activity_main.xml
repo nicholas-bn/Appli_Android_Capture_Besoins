@@ -21,7 +21,8 @@
         android:layout_alignParentBottom="true"
         android:gravity="top"
         android:layout_below="@+id/button_save"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:hint="Saisir votre texte ici." />
 
     <Button
         android:text="Save"
@@ -38,4 +39,12 @@
         android:id="@+id/button_load"
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/button_save" />
+
+    <Button
+        android:text="NEW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/button_new" />
 </RelativeLayout>
