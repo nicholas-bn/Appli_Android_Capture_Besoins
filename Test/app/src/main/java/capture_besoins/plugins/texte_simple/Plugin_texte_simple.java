@@ -245,45 +245,51 @@ public class Plugin_texte_simple {
         contenuTexte.setText(sb.toString());
 
         // On retient que le fichier a été chargé et son nom
-        // hasBeenLoaded = true;
+        hasBeenLoaded = true;
+        nameUsed = nomFichier;
 
     }
 
     // Lorsqu'on appuit sur le bouton SAVE
     private void choix_nom_du_Fichier(View v) {
 
-        // Dialogue pour choisir le nom du fichier à sauvegarder
-        AlertDialog.Builder building = new AlertDialog.Builder(v.getContext());
+        if(hasBeenLoaded){
+            sauvegarde_Du_Fichier(nameUsed);
+        } else {
+            // Dialogue pour choisir le nom du fichier à sauvegarder
+            AlertDialog.Builder building = new AlertDialog.Builder(v.getContext());
 
-        // AutoCompleteTextView où l'on peut écrire le nom du fichier
-        final AutoCompleteTextView myAutoCompleteChoixNomFichier = new AutoCompleteTextView(building.getContext());
-        myAutoCompleteChoixNomFichier.setHint("Nom du fichier");
-        building.setView(myAutoCompleteChoixNomFichier);
+            // AutoCompleteTextView où l'on peut écrire le nom du fichier
+            final AutoCompleteTextView myAutoCompleteChoixNomFichier = new AutoCompleteTextView(building.getContext());
+            myAutoCompleteChoixNomFichier.setHint("Nom du fichier");
+            building.setView(myAutoCompleteChoixNomFichier);
 
-        // Titre
-        building.setTitle("Choisir le nom du fichier :");
+            // Titre
+            building.setTitle("Choisir le nom du fichier :");
 
-        // Définir le comportement du bouton "OK"
-        building.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // On envoie le nom du fichier fourni sous le format String
-                sauvegarde_Du_Fichier(myAutoCompleteChoixNomFichier.getText().toString());
-            }
-        });
+            // Définir le comportement du bouton "OK"
+            building.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // On envoie le nom du fichier fourni sous le format String
+                    sauvegarde_Du_Fichier(myAutoCompleteChoixNomFichier.getText().toString());
+                }
+            });
 
-        // Définir le comportement du bouton "Annuler"
-        building.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Si il appuie sur Annuler on fait rien
-                return;
-            }
-        });
+            // Définir le comportement du bouton "Annuler"
+            building.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Si il appuie sur Annuler on fait rien
+                    return;
+                }
+            });
 
-        // On le créé et on l'affiche
-        building.create();
-        building.show();
+            // On le créé et on l'affiche
+            building.create();
+            building.show();
+        }
+
     }
 
 
