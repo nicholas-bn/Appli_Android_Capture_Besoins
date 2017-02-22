@@ -10,6 +10,8 @@ L'application devra être développé en modules. Voici la liste des principaux 
 * [Image](#image)
 * [Son](#son)
 
+![](http://i.giphy.com/Gdtc36HCe3aFy.gif)
+
 ## Encadrant de ce projet :
 * Pierre CRESCENZO (pierre.crescenzo@unice.fr)
 
