@@ -11,7 +11,7 @@ L'application devra être développé en modules. Voici la liste des principaux 
 * [Image](#image)
 * [Son](#son)
 
-![](http://i.giphy.com/Gdtc36HCe3aFy.gif)
+
 
 ## Encadrant de ce projet :
 * Pierre CRESCENZO (pierre.crescenzo@unice.fr)
@@ -26,11 +26,13 @@ L'application devra être développé en modules. Voici la liste des principaux 
 Deux personnes vont s'occuper du développement du noyau de l'application.
 Les deux autres travailleront sur le développement d'un module.
 
-<a id="texte"/>
-
-### Base de l'application
 <a id="base"/>
+### Base de l'application
+L'application doit permettre la création de projet :
 
+![](http://i.giphy.com/bbxuvsC29ygNy.gif)
+
+<a id="texte"/>
 ### Module de traitement de texte
 
 - Un basique
@@ -38,12 +40,10 @@ Les deux autres travailleront sur le développement d'un module.
 
 
 <a id="image"/>
-
 ### Module de gestion des images
 
 
 <a id="son"/>
-
 ### Module de gestion du son
 
 ## Google Doc 
