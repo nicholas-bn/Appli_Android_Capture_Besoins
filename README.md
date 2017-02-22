@@ -27,6 +27,9 @@ Les deux autres travailleront sur le développement d'un module.
 
 ### Module de traitement de texte
 
+- Un basique
+- Un utilisant l'api de Word
+
 
 <a id="image"/>
 
