@@ -69,6 +69,9 @@ public class Plugin_texte_simple {
         // On récupère le nom de projet
         this.nomProjet = nomProjet;
 
+        // On change le label de l'Activity
+        activity.setTitle(nomProjet + " - Texte simple");
+
         // On récupére le dossier où l'on se situe
         racineApp = activity.getFilesDir();
         System.out.println("Racine de l'application : " + racineApp.toString());
@@ -130,7 +133,7 @@ public class Plugin_texte_simple {
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
 
             builder.setTitle("Attention");
-            builder.setMessage("Êtes-vous sûr de créer un nouveau texte ?");
+            builder.setMessage("Êtes-vous sûr de vouloir créer un nouveau Texte ?");
 
             builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                 @Override
@@ -253,7 +256,7 @@ public class Plugin_texte_simple {
     // Lorsqu'on appuit sur le bouton SAVE
     private void choix_nom_du_Fichier(View v) {
 
-        if(hasBeenLoaded){
+        if (hasBeenLoaded) {
             sauvegarde_Du_Fichier(nameUsed);
         } else {
             // Dialogue pour choisir le nom du fichier à sauvegarder

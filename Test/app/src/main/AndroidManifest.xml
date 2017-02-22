@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="capture_besoins.main.Activity_Texte"></activity>
+        <activity android:name="capture_besoins.plugins.texte_simple.Activity_Texte"></activity>
+        <activity android:name="capture_besoins.projet.Projet"></activity>
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 

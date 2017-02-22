@@ -18,21 +18,19 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import capture_besoins.main.Activity_Texte;
-import capture_besoins.main.MainActivity;
+import capture_besoins.plugins.texte_simple.Activity_Texte;
 import capture_besoins.main.R;
-import capture_besoins.plugins.texte_simple.Plugin_texte_simple;
 
 /**
  * Created by Karl on 21/02/2017.
  */
 
-public class GestionProjet implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class GestionProjets implements View.OnClickListener, AdapterView.OnItemClickListener {
 
-    //Activité principale
+    // Activité principale
     private Activity activity;
 
-    //Bouton pour créer un projet
+    // Bouton pour créer un projet
     private Button btn_creerProjet;
 
     // Liste des projets
@@ -42,7 +40,7 @@ public class GestionProjet implements View.OnClickListener, AdapterView.OnItemCl
     private final String varTempoNomUser = "userTest";
 
 
-    public GestionProjet(Activity activity) {
+    public GestionProjets(Activity activity) {
 
         // On récupère l'activity
         this.activity = activity;
@@ -64,7 +62,12 @@ public class GestionProjet implements View.OnClickListener, AdapterView.OnItemCl
 
     private void remplirListeProjets() {
         // On récupère la liste des Projets déja créés
-        List<String> listNomProjets = getNomProjets();
+        List<String> listNomProjets = getNomProjetsExistants();
+
+        // Si la liste est vide
+        if (listNomProjets == null) {
+            return;
+        }
 
         // Adapter qui contient les éléments de la liste
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
@@ -81,7 +84,7 @@ public class GestionProjet implements View.OnClickListener, AdapterView.OnItemCl
 
     }
 
-    private List<String> getNomProjets() {
+    private List<String> getNomProjetsExistants() {
         ArrayList<String> listProjets = new ArrayList<String>();
 
         // Racine de l'application
@@ -92,6 +95,11 @@ public class GestionProjet implements View.OnClickListener, AdapterView.OnItemCl
 
         // Liste des fichiers du répertoire
         File[] files = dossierApp.listFiles();
+
+        // Cas où aucun dossier n'est présent
+        if (files == null) {
+            return null;
+        }
 
         // Parcours des fichiers :
         for (File file : files) {
@@ -115,7 +123,7 @@ public class GestionProjet implements View.OnClickListener, AdapterView.OnItemCl
             projet.mkdirs();
             // Toast pour indiquer que le projet a été créé
             Toast.makeText(activity.getApplicationContext(),
-                    "Création du projet  " + nomProjet + " !", Toast.LENGTH_SHORT).show();
+                    "Création du projet : " + nomProjet + " !", Toast.LENGTH_SHORT).show();
         } else {
             // Toast pour indiquer que le projet existe déja
             Toast.makeText(activity.getApplicationContext(),
@@ -174,10 +182,10 @@ public class GestionProjet implements View.OnClickListener, AdapterView.OnItemCl
 
         // Toast pour indiquer qu'on ouvre ce projet
         Toast.makeText(activity.getApplicationContext(),
-                "Ouverture de " + nomProjet, Toast.LENGTH_SHORT).show();
+                "Ouverture de : " + nomProjet, Toast.LENGTH_SHORT).show();
 
         // Intent pour switch entre 2 activities
-        Intent i = new Intent(activity, Activity_Texte.class);
+        Intent i = new Intent(activity, Projet.class);
 
         // Bundle pour passer en paramètre le nom du projet
         Bundle b = new Bundle();
