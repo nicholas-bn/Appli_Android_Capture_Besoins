@@ -6,6 +6,7 @@
 
 L'application devra être développé en modules. Voici la liste des principaux modules à développer dans un premier temps : 
 
+* [Base de l'application](#base)
 * [Traitement de texte](#texte)
 * [Image](#image)
 * [Son](#son)
@@ -26,6 +27,9 @@ Deux personnes vont s'occuper du développement du noyau de l'application.
 Les deux autres travailleront sur le développement d'un module.
 
 <a id="texte"/>
+
+### Base de l'application
+<a id="base"/>
 
 ### Module de traitement de texte
 
