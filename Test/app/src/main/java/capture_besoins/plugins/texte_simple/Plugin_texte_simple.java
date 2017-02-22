@@ -77,6 +77,9 @@ public class Plugin_texte_simple {
         dossierTexte = new File(racineApp.getAbsolutePath() + File.separator + varTempoNomUser + File.separator + this.nomProjet + File.separator + "Text");
         System.out.println("Dossier Texte : " + dossierTexte);
 
+        // Si il existe pas on le créé
+        if (!dossierTexte.exists())
+            dossierTexte.mkdirs();
 
         // On récupére le button de sauvegarde
         save_Button = (Button) activity.findViewById(R.id.button_save);
@@ -299,10 +302,6 @@ public class Plugin_texte_simple {
 
         // On affiche le nom du fichier choisi
         System.out.println("Nom du Fichier : " + nomFichier);
-
-        // Si il existe pas on le créé
-        if (!dossierTexte.exists())
-            dossierTexte.mkdirs();
 
         // On créé un file pour le fichier à créé
         File fichierTexte = new File(dossierTexte + File.separator + nomFichier);
