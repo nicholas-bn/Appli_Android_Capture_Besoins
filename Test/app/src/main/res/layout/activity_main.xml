@@ -10,15 +10,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="capture_besoins.main.MainActivity">
 
-    <AutoCompleteTextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/autoCompleteTextView_contenuFichier"
-        android:layout_alignParentTop="true"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/texte"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:hint="Tapez votre texte ici." />
+        android:layout_alignParentBottom="true"
+        android:gravity="top"
+        android:layout_below="@+id/button_save"
+        android:layout_marginTop="10dp" />
 
     <Button
         android:text="Save"
@@ -32,7 +35,7 @@
         android:text="LOAD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/button_load"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/button_save"
-        android:id="@+id/button_load" />
+        android:layout_toStartOf="@+id/button_save" />
 </RelativeLayout>

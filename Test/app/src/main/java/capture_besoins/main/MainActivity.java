@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //setContentView(R.layout.activity_projet);
-        // gestionProjet = new GestionProjet(this);
+        //gestionProjet = new GestionProjet(this);
 
         setContentView(R.layout.activity_main);
         pluginTexteSimple = new Plugin_texte_simple(this);

@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.io.BufferedReader;
@@ -35,7 +36,7 @@ public class Plugin_texte_simple {
     Button load_Button;
 
     // Texte du fichier
-    AutoCompleteTextView contenuTexte;
+    EditText contenuTexte;
 
     // Variable temporaire du nom/id utilisateur
     final String varTempoNomUser = "userTest";
@@ -87,7 +88,7 @@ public class Plugin_texte_simple {
         });
 
         // On récupére et affiche le contenu Texte
-        contenuTexte = (AutoCompleteTextView) activity.findViewById(R.id.autoCompleteTextView_contenuFichier);
+        contenuTexte = (EditText) activity.findViewById(R.id.texte);
         System.out.println("Contenu Texte : " + contenuTexte.getText().toString());
     }
 
@@ -175,6 +176,7 @@ public class Plugin_texte_simple {
             while ((line = bufferedReader.readLine()) != null)
             {
                 sb.append(line);
+                sb.append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -187,6 +189,8 @@ public class Plugin_texte_simple {
 
     // Lorsqu'on appuit sur le bouton SAVE
     private void choix_nom_du_Fichier(View v) {
+
+        // TODO Gérer le cas où le fichier existe déja
 
         // Dialogue pour choisir le nom du fichier à sauvegarder
         AlertDialog.Builder building = new AlertDialog.Builder(v.getContext());
