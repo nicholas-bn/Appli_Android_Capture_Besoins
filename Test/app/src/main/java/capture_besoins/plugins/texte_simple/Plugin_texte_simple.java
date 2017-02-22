@@ -22,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import capture_besoins.main.R;
+import capture_besoins.services.Affichage;
 
 
 public class Plugin_texte_simple {
@@ -341,7 +342,7 @@ public class Plugin_texte_simple {
         // On le créé et on l'affiche
         retourSauvegardeSuccesOuEchec.create();
         retourSauvegardeSuccesOuEchec.show();*/
-        Toast.makeText(activity.getApplicationContext(),
-                "Fichier '" + nomFichier + "' sauvegardé !", Toast.LENGTH_SHORT).show();
+        Affichage.generateToast(activity, "Fichier '" + nomFichier + "' sauvegardé !");
+
     }
 }

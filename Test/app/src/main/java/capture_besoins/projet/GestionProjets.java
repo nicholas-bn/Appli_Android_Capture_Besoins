@@ -20,6 +20,7 @@ import java.util.List;
 
 import capture_besoins.plugins.texte_simple.Activity_Texte;
 import capture_besoins.main.R;
+import capture_besoins.services.Affichage;
 
 /**
  * Created by Karl on 21/02/2017.
@@ -122,12 +123,11 @@ public class GestionProjets implements View.OnClickListener, AdapterView.OnItemC
         if (!projet.exists()) {
             projet.mkdirs();
             // Toast pour indiquer que le projet a été créé
-            Toast.makeText(activity.getApplicationContext(),
-                    "Création du projet : " + nomProjet + " !", Toast.LENGTH_SHORT).show();
+            Affichage.generateToast(activity, "Création du projet : " + nomProjet + " !");
+
         } else {
             // Toast pour indiquer que le projet existe déja
-            Toast.makeText(activity.getApplicationContext(),
-                    "Le projet " + nomProjet + " existe déja !", Toast.LENGTH_SHORT).show();
+            Affichage.generateToast(activity,"Le projet " + nomProjet + " existe déja !");
         }
     }
 
@@ -181,8 +181,7 @@ public class GestionProjets implements View.OnClickListener, AdapterView.OnItemC
         String nomProjet = ((TextView) view).getText().toString();
 
         // Toast pour indiquer qu'on ouvre ce projet
-        Toast.makeText(activity.getApplicationContext(),
-                "Ouverture de : " + nomProjet, Toast.LENGTH_SHORT).show();
+        Affichage.generateToast(activity, "Ouverture de : " + nomProjet );
 
         // Intent pour switch entre 2 activities
         Intent i = new Intent(activity, Projet.class);
