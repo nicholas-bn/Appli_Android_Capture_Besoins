@@ -18,15 +18,13 @@ public class Activity_Texte extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // On récupère le nom du projet sélectionné
         Bundle b = getIntent().getExtras();
-        String value = ""; // or other values
+        String nomProjet = ""; // or other values
         if (b != null)
-            value = b.getString("nom");
+            nomProjet = b.getString("nom");
 
-        System.out.println("+++++++++ ++++ " + value);
-        new Plugin_texte_simple(this, value);
-
-        // MET EN COMMENTAIRE CELUI QUE TU NUTILISES PAS SINON CA PLANTE
+        new Plugin_texte_simple(this, nomProjet);
 
     }
 }

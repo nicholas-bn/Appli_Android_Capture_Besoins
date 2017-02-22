@@ -1,11 +1,14 @@
 package capture_besoins.projet;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -70,6 +73,9 @@ public class GestionProjet implements View.OnClickListener, AdapterView.OnItemCl
         // On set l'adapter à la ListView
         listView_projets.setAdapter(adapter);
 
+        // On met à jour le texte
+        adapter.notifyDataSetChanged();
+
         // On ajoute un listener
         listView_projets.setOnItemClickListener(this);
 
@@ -97,16 +103,66 @@ public class GestionProjet implements View.OnClickListener, AdapterView.OnItemCl
         return listProjets;
     }
 
+    private void creerProjet(String nomProjet) {
+        // Racine de l'application
+        File racineApp = activity.getFilesDir();
+
+        // Dossier contenant les projets
+        File projet = new File(racineApp.getAbsolutePath() + File.separator + varTempoNomUser + File.separator + nomProjet);
+
+        // S'il n'existe pas on le créé
+        if (!projet.exists()) {
+            projet.mkdirs();
+            // Toast pour indiquer que le projet a été créé
+            Toast.makeText(activity.getApplicationContext(),
+                    "Création du projet  " + nomProjet + " !", Toast.LENGTH_SHORT).show();
+        } else {
+            // Toast pour indiquer que le projet existe déja
+            Toast.makeText(activity.getApplicationContext(),
+                    "Le projet " + nomProjet + " existe déja !", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onClick(View v) {
-        // TODO Créer nouveau projet
 
-        // TODO 1 : AlertBox pour demander le nom
+        // Dialogue pour choisir le nom du nouveau projet
+        AlertDialog.Builder building = new AlertDialog.Builder(v.getContext());
 
-        // TODO 2 : Créer répertoire du projet
+        // AutoCompleteTextView où l'on peut écrire le nom du fiprojet
+        final AutoCompleteTextView myAutoCompleteChoixNomFichier = new AutoCompleteTextView(building.getContext());
+        myAutoCompleteChoixNomFichier.setHint("Nom du projet");
+        building.setView(myAutoCompleteChoixNomFichier);
 
-        // TODO 3 : Ouvrir projet créé
+        // Titre
+        building.setTitle("Choisir le nom du projet :");
+
+        // Définir le comportement du bouton "OK"
+        building.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // On crée le projet
+                creerProjet(myAutoCompleteChoixNomFichier.getText().toString());
+
+                // On met à jour la liste
+                remplirListeProjets();
+            }
+        });
+
+        // Définir le comportement du bouton "Annuler"
+        building.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Si il appuie sur Annuler on fait rien
+                return;
+            }
+        });
+
+        // On le créé et on l'affiche
+        building.create();
+        building.show();
     }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -116,14 +172,19 @@ public class GestionProjet implements View.OnClickListener, AdapterView.OnItemCl
         // Récupération du nom du projet sélectionné
         String nomProjet = ((TextView) view).getText().toString();
 
+        // Toast pour indiquer qu'on ouvre ce projet
         Toast.makeText(activity.getApplicationContext(),
-                nomProjet, Toast.LENGTH_SHORT).show();
+                "Ouverture de " + nomProjet, Toast.LENGTH_SHORT).show();
 
-        //
+        // Intent pour switch entre 2 activities
         Intent i = new Intent(activity, Activity_Texte.class);
+
+        // Bundle pour passer en paramètre le nom du projet
         Bundle b = new Bundle();
-        b.putString("nom", nomProjet); //Your id
-        i.putExtras(b); //Put your id to your next Intent
+        b.putString("nom", nomProjet); // Nom du projet sélectionné
+        i.putExtras(b);
+
+        // On lance la deuxième activity
         activity.startActivity(i);
 
     }

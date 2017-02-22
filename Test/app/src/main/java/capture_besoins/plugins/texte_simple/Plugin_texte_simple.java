@@ -252,8 +252,6 @@ public class Plugin_texte_simple {
     // Lorsqu'on appuit sur le bouton SAVE
     private void choix_nom_du_Fichier(View v) {
 
-        // TODO Gérer le cas où le fichier existe déja
-
         // Dialogue pour choisir le nom du fichier à sauvegarder
         AlertDialog.Builder building = new AlertDialog.Builder(v.getContext());
 
@@ -335,6 +333,6 @@ public class Plugin_texte_simple {
         retourSauvegardeSuccesOuEchec.create();
         retourSauvegardeSuccesOuEchec.show();*/
         Toast.makeText(activity.getApplicationContext(),
-                "Fichier '" + nomFichier + "'sauvegardé", Toast.LENGTH_SHORT).show();
+                "Fichier '" + nomFichier + "' sauvegardé !", Toast.LENGTH_SHORT).show();
     }
 }

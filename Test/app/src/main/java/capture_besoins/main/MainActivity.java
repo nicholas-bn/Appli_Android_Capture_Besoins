@@ -17,15 +17,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         setContentView(R.layout.activity_projet);
         gestionProjet = new GestionProjet(this);
-
-        //setContentView(R.layout.activity_main);
-        //pluginTexteSimple = new Plugin_texte_simple(this);
-
-        // MET EN COMMENTAIRE CELUI QUE TU NUTILISES PAS SINON CA PLANTE
 
     }
 }

@@ -5,7 +5,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Texte"
+        android:label="Capture des besoins"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="capture_besoins.main.MainActivity">
