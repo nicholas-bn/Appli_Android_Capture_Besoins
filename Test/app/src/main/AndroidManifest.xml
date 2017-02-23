@@ -18,6 +18,7 @@
         <activity android:name="capture_besoins.plugins.texte_simple.Plugin_texte_simple"></activity>
         <activity android:name="capture_besoins.projet.Projet"></activity>
         <activity android:name="capture_besoins.plugins.texte_word.Plugin_texte_word"></activity>
+        <activity android:name="capture_besoins.plugins.photo.Plugin_photo"></activity>
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import capture_besoins.main.R;
+import capture_besoins.plugins.photo.Plugin_photo;
 import capture_besoins.plugins.texte_simple.Plugin_texte_simple;
 import capture_besoins.plugins.texte_word.Plugin_texte_word;
 
@@ -24,6 +25,9 @@ public class Projet extends AppCompatActivity implements View.OnClickListener {
 
     // Bouton plugin Texte word
     private Button btn_TexteWord;
+
+    // Bouton plugin Texte word
+    private Button btn_Photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,11 @@ public class Projet extends AppCompatActivity implements View.OnClickListener {
         btn_TexteWord = (Button) findViewById(R.id.btn_pluginTexteWord);
         // Ajout de son listener
         btn_TexteWord.setOnClickListener(this);
+
+        // On récupére le bouton du plugin de Texte word
+        btn_Photo = (Button) findViewById(R.id.btn_pluginPhoto);
+        // Ajout de son listener
+        btn_Photo.setOnClickListener(this);
     }
 
 
@@ -69,6 +78,12 @@ public class Projet extends AppCompatActivity implements View.OnClickListener {
         if (v.getId() == R.id.btn_pluginTexteWord) {
             // Intent pour switch entre 2 activities
             i = new Intent(this, Plugin_texte_word.class);
+        }
+
+        // Si on a cliqué sur le bouton "Photo"
+        if (v.getId() == R.id.btn_pluginPhoto) {
+            // Intent pour switch entre 2 activities
+            i = new Intent(this, Plugin_photo.class);
         }
 
         // Bundle pour passer en paramètre le nom du projet
