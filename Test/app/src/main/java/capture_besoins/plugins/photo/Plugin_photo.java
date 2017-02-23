@@ -13,8 +13,7 @@ public class Plugin_photo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        System.out.println("ALLLLLLLLLLLLLLLLLLLLLLLLO");
+
 
     }
-
 }
