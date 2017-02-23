@@ -15,7 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="capture_besoins.plugins.texte_simple.Activity_Texte"></activity>
+        <activity android:name="capture_besoins.plugins.texte_simple.Plugin_texte_simple"></activity>
         <activity android:name="capture_besoins.projet.Projet"></activity>
         <activity android:name="capture_besoins.plugins.texte_word.Plugin_texte_word"></activity>
     </application>

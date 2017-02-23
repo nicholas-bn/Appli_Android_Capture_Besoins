@@ -2,8 +2,10 @@ package capture_besoins.plugins.texte_simple;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -25,10 +27,7 @@ import capture_besoins.main.R;
 import capture_besoins.services.Affichage;
 
 
-public class Plugin_texte_simple {
-
-    // Activité principale
-    Activity activity;
+public class Plugin_texte_simple extends AppCompatActivity {
 
     // Boutton pour sauvegarder le fichier
     Button save_Button;
@@ -62,19 +61,24 @@ public class Plugin_texte_simple {
     private File racineApp;
 
 
-    public Plugin_texte_simple(Activity activity, String nomProjet) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        // On récupère l'activity
-        this.activity = activity;
+        // Layout associé à cette Activity
+        setContentView(R.layout.activity_texte_simple);
 
-        // On récupère le nom de projet
-        this.nomProjet = nomProjet;
+        // On récupère le nom du projet sélectionné
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            this.nomProjet = b.getString("nom");
+        }
 
         // On change le label de l'Activity
-        activity.setTitle(nomProjet + " - Texte simple");
+        setTitle(nomProjet + " - Texte simple");
 
         // On récupére le dossier où l'on se situe
-        racineApp = activity.getFilesDir();
+        racineApp = getFilesDir();
         System.out.println("Racine de l'application : " + racineApp.toString());
 
         // Dossier contenant les fichiers textes
@@ -86,7 +90,7 @@ public class Plugin_texte_simple {
             dossierTexte.mkdirs();
 
         // On récupére le button de sauvegarde
-        save_Button = (Button) activity.findViewById(R.id.button_save);
+        save_Button = (Button) this.findViewById(R.id.button_save);
 
         // On y ajoute un listener
         save_Button.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +101,7 @@ public class Plugin_texte_simple {
         });
 
         // On récupére le button new
-        new_Button = (Button) activity.findViewById(R.id.button_new);
+        new_Button = (Button) this.findViewById(R.id.button_new);
 
         // On y ajoute un listener
         new_Button.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +112,7 @@ public class Plugin_texte_simple {
         });
 
         // On récupére le bouton de chargement et d'edit de fichier texte
-        load_Button = (Button) activity.findViewById(R.id.button_load);
+        load_Button = (Button) this.findViewById(R.id.button_load);
 
         // On y ajoute un listener
         load_Button.setOnClickListener(new View.OnClickListener() {
@@ -119,8 +123,9 @@ public class Plugin_texte_simple {
         });
 
         // On récupére et affiche le contenu Texte
-        contenuTexte = (EditText) activity.findViewById(R.id.texte);
+        contenuTexte = (EditText) this.findViewById(R.id.texte);
         System.out.println("Contenu Texte : " + contenuTexte.getText().toString());
+
     }
 
     private void clean_and_new(View v) {
@@ -342,7 +347,7 @@ public class Plugin_texte_simple {
         // On le créé et on l'affiche
         retourSauvegardeSuccesOuEchec.create();
         retourSauvegardeSuccesOuEchec.show();*/
-        Affichage.generateToast(activity, "Fichier '" + nomFichier + "' sauvegardé !");
+        Affichage.generateToast(this, "Fichier '" + nomFichier + "' sauvegardé !");
 
     }
 }

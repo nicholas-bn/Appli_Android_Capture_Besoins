@@ -12,13 +12,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import capture_besoins.plugins.texte_simple.Activity_Texte;
 import capture_besoins.main.R;
 import capture_besoins.services.Affichage;
 

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import capture_besoins.main.R;
-import capture_besoins.plugins.texte_simple.Activity_Texte;
+import capture_besoins.plugins.texte_simple.Plugin_texte_simple;
 import capture_besoins.plugins.texte_word.Plugin_texte_word;
 
 /**
@@ -62,7 +62,7 @@ public class Projet extends AppCompatActivity implements View.OnClickListener {
         // Si on a cliqué sur le bouton "Texte simple"
         if (v.getId() == R.id.btn_pluginTexteSimple) {
             // Intent pour switch entre 2 activities
-            i = new Intent(this, Activity_Texte.class);
+            i = new Intent(this, Plugin_texte_simple.class);
         }
 
         // Si on a cliqué sur le bouton "Word"

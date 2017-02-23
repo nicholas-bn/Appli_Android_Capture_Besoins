@@ -3,17 +3,11 @@ package capture_besoins.plugins.texte_word;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-
-import com.aspose.words.Document;
-import com.aspose.words.DocumentBuilder;
 
 import java.io.File;
 
 import capture_besoins.main.R;
-import capture_besoins.plugins.texte_simple.Plugin_texte_simple;
-import capture_besoins.services.Affichage;
 
 /**
  * Created by Karl on 23/02/2017.
@@ -42,18 +36,7 @@ public class Plugin_texte_word extends AppCompatActivity {
         // Ouverture du docx
 
 
-        try {
-            Document doc = new Document();
-            DocumentBuilder builder = new DocumentBuilder(doc);
-            builder.writeln("Hello World!");
 
-            String sdCardPath = Environment.getExternalStorageDirectory().getPath() + File.separator;
-
-            doc.save(sdCardPath + File.separator + "DocumentBuilderAndSave Out.docx");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        openDocument(dossierTexte.getAbsolutePath() + File.separator + "DocumentBuilderAndSave Out.docx");
     }
 
     public void openDocument(String name) {
