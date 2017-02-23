@@ -36,6 +36,16 @@ L'application doit permettre la création de projet :
 ### Module de traitement de texte
 
 - Un basique
+
+On peut créer un nouveau document texte :
+
+![](http://i.giphy.com/ND8wm1zpEUunm.gif)
+
+
+On peut rouvrir un document texte :
+
+![](http://i.giphy.com/OeRArdPKuOsEg.gif)
+
 - Un utilisant l'api de Word
 
 
