@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Test.iml" filepath="$PROJECT_DIR$/Test.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aspose-words-17.2.0-android/aspose-words-17.2.0-android.iml" filepath="$PROJECT_DIR$/aspose-words-17.2.0-android/aspose-words-17.2.0-android.iml" />
     </modules>
   </component>
 </project>
