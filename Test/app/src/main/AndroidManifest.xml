@@ -3,6 +3,7 @@
     package="capture_besoins.main">
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-feature android:name="android.hardware.camera2.full" />
 
     <application
@@ -22,6 +23,7 @@
         <activity android:name="capture_besoins.projet.Projet"></activity>
         <activity android:name="capture_besoins.plugins.texte_word.Plugin_texte_word"></activity>
         <activity android:name="capture_besoins.plugins.photo.Plugin_photo"></activity>
+        <activity android:name="capture_besoins.plugins.son.Plugin_son"></activity>
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
