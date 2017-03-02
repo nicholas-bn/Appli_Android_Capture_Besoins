@@ -1,8 +1,6 @@
 package capture_besoins.plugins.son;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -11,10 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.TextureView;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import java.io.IOException;
@@ -33,10 +28,10 @@ public class Plugin_son extends AppCompatActivity  {
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String mFileName = null;
 
-    private RecordButton mRecordButton = null;
+    private RecordButton btn_record = null;
     private MediaRecorder mRecorder = null;
 
-    private PlayButton   mPlayButton = null;
+    private PlayButton btn_play = null;
     private MediaPlayer mPlayer = null;
 
     // Requesting permission to RECORD_AUDIO
@@ -55,7 +50,7 @@ public class Plugin_son extends AppCompatActivity  {
 
     }
 
-    private void onRecord(boolean start) {
+    public void onRecord(boolean start) {
         if (start) {
             startRecording();
         } else {
@@ -63,7 +58,7 @@ public class Plugin_son extends AppCompatActivity  {
         }
     }
 
-    private void onPlay(boolean start) {
+    public void onPlay(boolean start) {
         if (start) {
             startPlaying();
         } else {
@@ -109,50 +104,6 @@ public class Plugin_son extends AppCompatActivity  {
         mRecorder = null;
     }
 
-    class RecordButton extends Button {
-        boolean mStartRecording = true;
-
-        OnClickListener clicker = new OnClickListener() {
-            public void onClick(View v) {
-                onRecord(mStartRecording);
-                if (mStartRecording) {
-                    setText("Stop recording");
-                } else {
-                    setText("Start recording");
-                }
-                mStartRecording = !mStartRecording;
-            }
-        };
-
-        public RecordButton(Context ctx) {
-            super(ctx);
-            setText("Start recording");
-            setOnClickListener(clicker);
-        }
-    }
-
-    class PlayButton extends Button {
-        boolean mStartPlaying = true;
-
-        OnClickListener clicker = new OnClickListener() {
-            public void onClick(View v) {
-                onPlay(mStartPlaying);
-                if (mStartPlaying) {
-                    setText("Stop playing");
-                } else {
-                    setText("Start playing");
-                }
-                mStartPlaying = !mStartPlaying;
-            }
-        };
-
-        public PlayButton(Context ctx) {
-            super(ctx);
-            setText("Start playing");
-            setOnClickListener(clicker);
-        }
-    }
-
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -168,7 +119,7 @@ public class Plugin_son extends AppCompatActivity  {
         }
 
         // On change le label de l'Activity
-        setTitle(nomProjet);
+        setTitle(nomProjet + " - Son");
 
         // Record to the external cache directory for visibility
         mFileName = getExternalCacheDir().getAbsolutePath();
@@ -178,16 +129,16 @@ public class Plugin_son extends AppCompatActivity  {
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.layoutSon);
 
-        mRecordButton = new RecordButton(this);
-        ll.addView(mRecordButton,
+        btn_record = new RecordButton(this);
+        ll.addView(btn_record,
                 new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-        mPlayButton = new PlayButton(this);
-        ll.addView(mPlayButton,
+        btn_play = new PlayButton(this);
+        ll.addView(btn_play,
                 new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
 
