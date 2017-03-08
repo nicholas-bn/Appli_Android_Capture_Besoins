@@ -63,3 +63,6 @@ https://docs.google.com/document/d/1FinkuqfGRDSg25VJt2I1DVw4ol1ew82M6A3E4d-ZlXs/
 ## Gant
 Gant au 08/03/2017
 ![](https://scontent.xx.fbcdn.net/v/t35.0-12/17200826_10213023687250830_1937669843_o.png?oh=e797d4a3956622c7f6511a18c8de2fc0&oe=58C23E11)
+
+### Automate (Process d'utilisation)
+![](https://scontent.xx.fbcdn.net/v/t34.0-12/17160978_10213023945857295_1718440189_n.png?oh=fadb744ecfe5af864e4f0a3e5a5a37a7&oe=58C25572)
