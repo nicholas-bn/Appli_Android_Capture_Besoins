@@ -7,6 +7,7 @@
 L'application devra être développé en modules. Voici la liste des principaux modules à développer dans un premier temps : 
 
 * [Base de l'application](#base)
+* [Connexion au compte Google](#google)
 * [Traitement de texte](#texte)
 * [Image](#image)
 * [Son](#son)
@@ -32,6 +33,10 @@ L'application doit permettre la création de projet :
 
 ![](http://i.giphy.com/bbxuvsC29ygNy.gif)
 
+<a id="google"/>
+### Connexion au compte Google
+Un utilisateur doit pouvoir se connecter à son compte Google depuis l'application. Cette connexion lui permettra de pouvoir synchroniser ses fichiers vers son Google Drive.
+
 <a id="texte"/>
 ### Module de traitement de texte
 
@@ -47,6 +52,7 @@ On peut rouvrir un document texte :
 ![](http://i.giphy.com/OeRArdPKuOsEg.gif)
 
 - Un utilisant l'api de Word
+(En attente...)
 
 
 <a id="image"/>
@@ -55,6 +61,9 @@ On peut rouvrir un document texte :
 
 <a id="son"/>
 ### Module de gestion du son
+(En cours)
+
+L'utilisateur doit pouvoir enregistrer du son.
 
 ## Google Doc 
 https://docs.google.com/document/d/1FinkuqfGRDSg25VJt2I1DVw4ol1ew82M6A3E4d-ZlXs/edit
