@@ -58,3 +58,8 @@ On peut rouvrir un document texte :
 
 ## Google Doc 
 https://docs.google.com/document/d/1FinkuqfGRDSg25VJt2I1DVw4ol1ew82M6A3E4d-ZlXs/edit
+
+### Gestion et Suivi de projet
+## Gant
+Gant au 08/03/2017
+![](https://scontent.xx.fbcdn.net/v/t35.0-12/17200826_10213023687250830_1937669843_o.png?oh=e797d4a3956622c7f6511a18c8de2fc0&oe=58C23E11)
