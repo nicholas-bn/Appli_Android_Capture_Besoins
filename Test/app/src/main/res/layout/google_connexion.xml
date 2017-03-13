@@ -4,17 +4,17 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <com.google.android.gms.common.SignInButton
-        android:text="Sign in"
+    <Button
+        android:id="@+id/createfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/sign_in_button" />
+        android:text="Create a file on Google Drive" />
 
-    <TextView
+    <Button
+        android:id="@+id/openfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/nom_google"
-        android:textAlignment="center"
-        tools:gravity="center" />
+        android:layout_below="@+id/createfile"
+        android:text="Open file from Google Drive" />
 
 </LinearLayout>

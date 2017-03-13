@@ -4,6 +4,8 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-feature android:name="android.hardware.camera2.full" />
 
     <application
@@ -24,6 +26,14 @@
         <activity android:name="capture_besoins.plugins.texte_word.Plugin_texte_word"></activity>
         <activity android:name="capture_besoins.plugins.photo.Plugin_photo"></activity>
         <activity android:name="capture_besoins.plugins.son.Plugin_son"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAr_QSYJ3xl61fqJj1xxxxxxx-xxxxx" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+         android:value="@integer/google_play_services_version" />
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
