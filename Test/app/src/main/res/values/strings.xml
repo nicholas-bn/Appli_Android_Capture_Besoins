@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Test</string>
+    <string name="take_picture">Prendre une photo</string>
 </resources>
