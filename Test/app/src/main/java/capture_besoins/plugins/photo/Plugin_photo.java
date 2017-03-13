@@ -13,11 +13,11 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
-import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -27,23 +27,23 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-import java.text.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.security.Security;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.LogRecord;
 
 import capture_besoins.main.R;
-
-import static android.R.attr.data;
-
-/**
- * Created by Nicho on 23/02/2017.
- */
 
 public class Plugin_photo extends AppCompatActivity {
 
@@ -208,8 +208,8 @@ public class Plugin_photo extends AppCompatActivity {
             previewsize=map.getOutputSizes(SurfaceTexture.class)[0];
             try {
                 manager.openCamera(camerId, stateCallback, null);
-            } catch(SecurityException z){
-                z.getStackTrace();
+            }catch(SecurityException se) {
+                se.printStackTrace();
             }
         }catch (Exception e)
         {
@@ -322,11 +322,11 @@ public class Plugin_photo extends AppCompatActivity {
             previewSession.setRepeatingRequest(previewBuilder.build(), null, handler);
         }catch (Exception e){}
     }
-
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-       // getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -335,27 +335,32 @@ public class Plugin_photo extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        /*
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }*/
+        }
 
         return super.onOptionsItemSelected(item);
     }
-
+    */
     private static File getOutputMediaFile() {
-        File mediaStorageDir = new File("/data/data/test.test/files/userTest/Text/Photo");
-        if(!mediaStorageDir.exists()){
-            mediaStorageDir.mkdirs();
+        File mediaStorageDir = new File(
+                Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                "MyCameraApp");
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d("MyCameraApp", "failed to create directory");
+                return null;
+            }
         }
         // Create a media file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
-                .format(new java.util.Date());
+                .format(new Date());
         File mediaFile;
-        mediaFile = new File(mediaStorageDir + File.separator
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator
                 + "IMG_" + timeStamp + ".jpg");
 
         return mediaFile;
