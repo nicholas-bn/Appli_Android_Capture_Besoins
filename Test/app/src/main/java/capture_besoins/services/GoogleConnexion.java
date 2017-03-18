@@ -223,14 +223,14 @@ public class GoogleConnexion extends Fragment implements GoogleApiClient.Connect
                 OutputStream outputStream = driveContents.getOutputStream();
                 Writer writer = new OutputStreamWriter(outputStream);
                 try {
-                    writer.write("Hello abhay!");
+                    writer.write("Bonjour !");
                     writer.close();
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
                 }
 
                 MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
-                        .setTitle("abhaytest2")
+                        .setTitle("TestFichier1")
                         .setMimeType("text/plain")
                         .setStarred(true).build();
 
@@ -251,7 +251,7 @@ public class GoogleConnexion extends Fragment implements GoogleApiClient.Connect
                 public void onResult(DriveFolder.DriveFileResult result) {
                     if (result.getStatus().isSuccess()) {
 
-                        Toast.makeText(getActivity(), "file created: " + "" +
+                        Toast.makeText(getActivity(), "Fichier créé : " + "" +
                                 result.getDriveFile().getDriveId(), Toast.LENGTH_LONG).show();
 
                     }

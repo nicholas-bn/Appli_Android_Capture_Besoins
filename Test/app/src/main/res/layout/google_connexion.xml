@@ -8,13 +8,14 @@
         android:id="@+id/createfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create a file on Google Drive" />
+        android:text="Création"
+        tools:ignore="ButtonStyle" />
 
     <Button
         android:id="@+id/openfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/createfile"
-        android:text="Open file from Google Drive" />
+        android:text="Ouverture Drive"
+        tools:ignore="ButtonStyle" />
 
 </LinearLayout>
