@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.miage.m1.capture.pluginphoto">
+
+    <!-- PERMISSIONS -->
+
+    <!-- Ecriture en dehors de l'application (EXTERNAL STORAGE) -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Enregistrer du Son -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- FIN PERMISSIONS -->
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="Photo"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <!-- Intent pour pouvoir lancer ce Plugin depuis l'application principale -->
+            <intent-filter>
+                <!-- Nom qui sera appelé par l'application principale -->
+                <action android:name="captureDesBesoins.plugin" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- -->
+
+        </activity>
+    </application>
+
+</manifest>

@@ -26,7 +26,10 @@
         <activity android:name="capture_besoins.plugins.texte_word.Plugin_texte_word"></activity>
         <activity android:name="capture_besoins.plugins.photo.Plugin_photo"></activity>
         <activity android:name="capture_besoins.plugins.son.Plugin_son"></activity>
-
+        <intent-filter>
+            <action android:name="android.media.action.STILL_IMAGE_CAMERA" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAr_QSYJ3xl61fqJj1xxxxxxx-xxxxx" />

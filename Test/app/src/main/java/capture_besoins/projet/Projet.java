@@ -1,7 +1,9 @@
 package capture_besoins.projet;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -87,6 +89,19 @@ public class Projet extends AppCompatActivity implements View.OnClickListener {
         if (v.getId() == R.id.btn_pluginTexteWord) {
             // Intent pour switch entre 2 activities
             i = new Intent(this, Plugin_texte_word.class);
+
+            Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.example.karl.capture_besoins_plugintest" +
+                    "");
+
+            Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+                return;
+            }
+            if (launchIntent != null) {
+                startActivity(launchIntent);//null pointer check in case package name was not found
+                return;
+            }
         }
 
         // Si on a cliqué sur le bouton "Photo"

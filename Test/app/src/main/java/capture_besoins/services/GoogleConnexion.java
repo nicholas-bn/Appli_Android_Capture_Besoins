@@ -60,6 +60,7 @@ public class GoogleConnexion extends Fragment implements GoogleApiClient.Connect
     @Override
     public void onResume() {
         super.onResume();
+
         if (mGoogleApiClient == null) {
 
             getActivity().findViewById(R.id.createfile).setOnClickListener(this);
@@ -77,7 +78,7 @@ public class GoogleConnexion extends Fragment implements GoogleApiClient.Connect
                     .build();
         }
 
-        mGoogleApiClient.connect();
+       // mGoogleApiClient.connect();
     }
 
 
