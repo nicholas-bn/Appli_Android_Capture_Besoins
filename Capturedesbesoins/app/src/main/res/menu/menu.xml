@@ -1,10 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.miage.m1.capture.capturedesbesoins.MainActivity">
+    tools:context="com.miage.m1.capture.capturedesbesoins.CustomActivity">
     <item
-        android:id="@+id/àPropos"
+        android:id="@+id/a_propos"
         android:orderInCategory="100"
         android:title="à propos"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/drive"
+        android:orderInCategory="100"
+        android:title="Connexion"
         app:showAsAction="never" />
 </menu>

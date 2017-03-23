@@ -3,13 +3,10 @@ package com.miage.m1.capture.capturedesbesoins;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,12 +19,9 @@ import android.widget.Toast;
 
 import com.miage.m1.capture.capturedesbesoins.Services.GestionnaireFichiers;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class MainActivity extends CustomActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     // Bouton pour créer un projet
     private FloatingActionButton btn_CreerProjet;
@@ -41,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Layout lié à l'activité
         setContentView(R.layout.activity_main);
 
+        overridePendingTransition(R.transition.slide_in_right,
+                R.transition.slide_out_right);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -137,29 +133,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // On le créé et on l'affiche
         building.create();
         building.show();
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.àPropos) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

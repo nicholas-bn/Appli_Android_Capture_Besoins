@@ -6,13 +6,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
 import com.miage.m1.capture.capturedesbesoins.Services.GestionnaireFichiers;
 
-public class ProjetActivity extends AppCompatActivity implements View.OnClickListener {
+public class ProjetActivity extends CustomActivity implements View.OnClickListener {
 
     // Nom du ProjetActivity en cours
     private String nomProjet;
@@ -23,6 +22,8 @@ public class ProjetActivity extends AppCompatActivity implements View.OnClickLis
 
         // Layout associé à l'activité
         setContentView(R.layout.activity_projet);
+
+        //overridePendingTransition(R.transition.slide_in_left, R.transition.slide_out_left);
 
         // On récupère le nom du projet sélectionné
         Bundle b = getIntent().getExtras();
@@ -51,6 +52,8 @@ public class ProjetActivity extends AppCompatActivity implements View.OnClickLis
         TextView description = (TextView) findViewById(R.id.description_projet);
 
     }
+
+
 
     @Override
     public void onClick(View view) {

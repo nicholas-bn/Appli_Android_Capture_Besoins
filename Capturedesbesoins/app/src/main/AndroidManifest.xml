@@ -7,6 +7,10 @@
     <!-- Ecriture en dehors de l'application (EXTERNAL STORAGE) -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <!-- Connexion à internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
     <!-- FIN PERMISSIONS -->
     <application
         android:allowBackup="true"
@@ -36,6 +40,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.miage.m1.capture.capturedesbesoins.MainActivity" />
         </activity>
+
+        <!-- Pour utiliser l'api Google Drive -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDbMPdKd-iHzzNQ8lQ1odFWkdpa-A1_YFw" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
     </application>
 
 </manifest>
