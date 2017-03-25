@@ -1,7 +1,9 @@
 package com.miage.m1.capture.capturedesbesoins;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -86,6 +88,16 @@ public class CustomActivity extends AppCompatActivity {
             }
 
             return true;
+        }
+
+        if(id == R.id.pushToDrive) {
+            // Si l'utilisateur n'est pas connecté
+            if(!liaisonDrive.isConnected()){
+                Log.i("PUSH TO DRIVE", "Tentative d'envoi sur le drive sans connexion au compte Google");
+                Snackbar.make(this.getCurrentFocus(), "Vous devez vous connecter sur votre compte Google pour utiliser votre Drive.", Snackbar.LENGTH_LONG).show();
+            } else {
+                liaisonDrive.askedToPushToDrive();
+            }
         }
 
         return super.onOptionsItemSelected(item);

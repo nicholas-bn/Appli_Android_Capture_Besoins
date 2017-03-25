@@ -5,12 +5,18 @@
     <item
         android:id="@+id/a_propos"
         android:orderInCategory="100"
-        android:title="à propos"
+        android:title="À propos"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/drive"
         android:orderInCategory="100"
         android:title="Connexion"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/pushToDrive"
+        android:orderInCategory="100"
+        android:title="Envoyer sur le Drive"
         app:showAsAction="never" />
 </menu>
