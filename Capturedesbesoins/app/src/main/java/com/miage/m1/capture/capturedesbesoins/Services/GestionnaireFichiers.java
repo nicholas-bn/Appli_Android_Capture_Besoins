@@ -16,7 +16,7 @@ import java.util.List;
 public class GestionnaireFichiers {
 
     // Nom du dossier de sauvegarde
-    private static String nomDossierMain = "userTest";
+    public static String nomDossierMain = "userTest";
 
     public static boolean creerDossier(Activity activity, String nomDossier) {
         // Racine de l'application
