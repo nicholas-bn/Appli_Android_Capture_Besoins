@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-
         // On change le label de l'Activity
         setTitle(nomProjet + " - Texte simple");
 
@@ -101,8 +100,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Si il existe pas on le créé
         if (!dossierTexte.exists())
-            Log.e("AAAAAAAAA  ccc ", "Dossier Texte : " +  dossierTexte.mkdirs());
-            //dossierTexte.mkdirs();
+            Log.e("AAAAAAAAA  ccc ", "Dossier Texte : " + dossierTexte.mkdirs());
+        //dossierTexte.mkdirs();
     }
 
     private void clean_and_new(View v) {
@@ -288,6 +287,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!m.matches()) {
             System.err.println("Nom du fichier texte (" + nomFichier + ") donné sans extenxion, on rajoute \".txt\".");
             nomFichier += ".txt";
+        } else { // si il y a un extension, on la remplace par ".txt"
+            // On garde l'ancien nom pour l'afficher dans le syso
+            String svg = nomFichier;
+
+            // On récupére le dernier point
+            int indexExtention = nomFichier.lastIndexOf(".");
+
+            // On découpe la chaine du début jusqu'au dernier point
+            String nomSansExtention = nomFichier.substring(0, indexExtention);
+
+            // On renomme
+            nomFichier = nomSansExtention + ".txt";
+
+            System.out.println("Fichier " + svg + " renommé en " + nomFichier);
         }
 
         // On affiche le nom du fichier choisi
