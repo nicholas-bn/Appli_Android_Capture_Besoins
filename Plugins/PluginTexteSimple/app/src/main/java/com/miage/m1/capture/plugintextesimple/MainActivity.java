@@ -354,6 +354,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Clique sur le bouton '+' pour créer un nouveau document Texte
         if (view.getId() == R.id.newTexte) {
             Snackbar.make(view, "Nouveau document !", Snackbar.LENGTH_LONG).show();
+            clean_and_new(view);
         }
 
         // Clique sur le bouton pour sauvegarde un Texte
