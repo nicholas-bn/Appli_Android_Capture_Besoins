@@ -8,8 +8,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -17,7 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.miage.m1.capture.capturedesbesoins.Services.GestionnaireFichiers;
+import com.miage.m1.capture.capturedesbesoins.services.GestionnaireFichiers;
 
 import java.util.List;
 

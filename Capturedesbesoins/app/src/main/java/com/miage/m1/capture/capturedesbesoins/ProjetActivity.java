@@ -4,18 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.miage.m1.capture.capturedesbesoins.Services.GestionnaireFichiers;
-import com.miage.m1.capture.capturedesbesoins.Services.GestionnaireXML;
+import com.miage.m1.capture.capturedesbesoins.services.GestionnaireFichiers;
+import com.miage.m1.capture.capturedesbesoins.services.GestionnaireXML;
+import com.miage.m1.capture.capturedesbesoins.xml.Fichier;
+import com.miage.m1.capture.capturedesbesoins.xml.Projet;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class ProjetActivity extends CustomActivity implements View.OnClickListener {
 
     // Nom du ProjetActivity en cours
     private String nomProjet;
+
+    // Informations sur le Projet en cours
+    private Projet projet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,8 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
         // On change le label de l'Activity
         setTitle(nomProjet);
 
+        projet = GestionnaireXML.getDetailsProjet(this, nomProjet);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,10 +60,22 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
 
         // Texte de description du Projet
         TextView description = (TextView) findViewById(R.id.description_projet);
-        description.setText(GestionnaireXML.getDescriptionDuProjet(this, nomProjet));
+        description.setText(projet.getDescription());
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        // On récupère la liste des Fichiers présents sur le téléphone
+        ArrayList<Fichier> listeFichiers = GestionnaireFichiers.getListeFichiersDuProjet(this, nomProjet);
+
+        // On ajoute dans Projet ceux qui n'y sont pas (qui viennent d'être crées)
+        projet.compareAndAddFichiers(listeFichiers);
+
+        // On met à jour le XML
+        GestionnaireFichiers.majXML(this, projet);
+    }
 
 
     @Override

@@ -1,4 +1,4 @@
-package com.miage.m1.capture.capturedesbesoins.Services;
+package com.miage.m1.capture.capturedesbesoins.services;
 
 import android.app.Activity;
 import android.support.design.widget.Snackbar;

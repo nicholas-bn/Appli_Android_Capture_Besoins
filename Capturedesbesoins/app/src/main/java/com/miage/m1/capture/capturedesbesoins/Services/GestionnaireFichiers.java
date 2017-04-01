@@ -1,12 +1,13 @@
-package com.miage.m1.capture.capturedesbesoins.Services;
+package com.miage.m1.capture.capturedesbesoins.services;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
+
+import com.miage.m1.capture.capturedesbesoins.xml.Fichier;
+import com.miage.m1.capture.capturedesbesoins.xml.Projet;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,34 +71,6 @@ public class GestionnaireFichiers {
         return listProjets;
     }
 
-    /* Checks if external storage is available for read and write TODO */
-    public boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
-    }
-
-    /* Checks if external storage is available to at least read TODO */
-    public boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            return true;
-        }
-        return false;
-    }
-
-    public static File getAlbumStorageDir(Context context, String albumName) {
-        // Get the directory for the app's private pictures directory.
-        File file = new File(context.getExternalFilesDir(
-                Environment.DIRECTORY_PICTURES), albumName);
-        if (!file.mkdirs()) {
-            // TODO Log.e(LOG_TAG, "Directory not created");
-        }
-        return file;
-    }
 
     public static String getCheminProjet(Activity activity, String nomProjet) {
         // Racine de l'application
@@ -121,19 +94,74 @@ public class GestionnaireFichiers {
     }
 
     public static void createXMLFile(Activity activity, String nomProjet) {
-        // Racine de l'application
-        File racineApp = activity.getExternalFilesDir(null);
-
         // Chemin du Dossier à créer
-        String cheminDossier = getCheminProjet(activity, nomProjet);
+        String cheminXML = getCheminFichierXML(activity, nomProjet);
 
         // fichier à créer
-        File fichier = new File(cheminDossier + File.separator + nomProjet + ".xml");
+        File fichier = new File(cheminXML);
 
         // On écrit le fichier
         try {
             PrintWriter ecritureDuFichierTexte = new PrintWriter(fichier);
             ecritureDuFichierTexte.println(GestionnaireXML.createXML(nomProjet));
+            ecritureDuFichierTexte.close();
+        } catch (java.io.IOException e) {
+            System.err.println("Erreur lors de l'écriture du fichier : \"" + fichier + "\"");
+            e.printStackTrace();
+        }
+    }
+
+    public static ArrayList<Fichier> getListeFichiersDuProjet(Activity activity, String nomProjet){
+        // Liste des Fichiers
+        ArrayList<Fichier> listeFichiers = new ArrayList<>();
+
+        // Chemin du Dossier à créer
+        String cheminDossier = getCheminProjet(activity, nomProjet);
+
+        // Dossier du Projet
+        File dossier = new File (cheminDossier);
+
+        // On récupère les types de documents (TEXT, IMAGE, SON)
+        File [] types = dossier.listFiles();
+
+        // Pour chacun de ces types :
+        for(File type : types){
+            // Si c'est un dossier
+            if(type.isDirectory()){
+                // Tableau des documents
+                File [] documents = type.listFiles();
+
+                // Pour chacun de ces documents :
+                for(File document : documents){
+                    // On crée un objet Fichier
+                    Fichier fichier = new Fichier();
+
+                    // On ajoute son nom
+                    fichier.setNom(document.getName());
+
+                    // On ajoute son type
+                    fichier.setType(type.getName());
+
+                    // On l'ajoute à liste des Fichiers
+                    listeFichiers.add(fichier);
+                }
+            }
+        }
+
+        return listeFichiers;
+    }
+
+    public static void majXML(Activity activity, Projet projet) {
+        // Chemin du Dossier à créer
+        String cheminXML = getCheminFichierXML(activity, projet.getNom());
+
+        // fichier à créer
+        File fichier = new File(cheminXML);
+
+        // On écrit le fichier
+        try {
+            PrintWriter ecritureDuFichierTexte = new PrintWriter(fichier);
+            ecritureDuFichierTexte.println(GestionnaireXML.majXML(projet));
             ecritureDuFichierTexte.close();
         } catch (java.io.IOException e) {
             System.err.println("Erreur lors de l'écriture du fichier : \"" + fichier + "\"");

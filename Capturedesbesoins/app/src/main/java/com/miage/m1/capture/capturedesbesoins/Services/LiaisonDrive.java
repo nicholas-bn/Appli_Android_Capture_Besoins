@@ -1,4 +1,4 @@
-package com.miage.m1.capture.capturedesbesoins.Services;
+package com.miage.m1.capture.capturedesbesoins.services;
 
 import android.app.Activity;
 import android.content.IntentSender;
@@ -12,18 +12,9 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.MetadataBuffer;
-import com.google.android.gms.drive.DriveApi.MetadataBufferResult;
 
-import com.google.android.gms.drive.DriveFolder.DriveFolderResult;
 import com.google.android.gms.drive.DriveId;
-import com.google.android.gms.drive.Metadata;
-import com.google.android.gms.drive.MetadataChangeSet;
-import com.google.android.gms.drive.query.Filters;
-import com.google.android.gms.drive.query.Query;
-import com.google.android.gms.drive.query.SearchableField;
 import com.miage.m1.capture.capturedesbesoins.R;
 
 import java.io.File;
