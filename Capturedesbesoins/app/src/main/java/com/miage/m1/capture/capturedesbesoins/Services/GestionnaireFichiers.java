@@ -6,6 +6,8 @@ import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,5 +107,37 @@ public class GestionnaireFichiers {
         File dossierProjet = new File(racineApp.getAbsolutePath() + File.separator + nomDossierMain + File.separator + nomProjet);
 
         return dossierProjet.getAbsolutePath();
+    }
+
+
+    public static String getCheminFichierXML(Activity activity, String nomProjet) {
+        // Racine de l'application
+        File racineApp = activity.getExternalFilesDir(null);
+
+        // Dossier contenant le Projet
+        File dossierProjet = new File(getCheminProjet(activity, nomProjet) + File.separator + nomProjet + ".xml");
+
+        return dossierProjet.getAbsolutePath();
+    }
+
+    public static void createXMLFile(Activity activity, String nomProjet) {
+        // Racine de l'application
+        File racineApp = activity.getExternalFilesDir(null);
+
+        // Chemin du Dossier à créer
+        String cheminDossier = getCheminProjet(activity, nomProjet);
+
+        // fichier à créer
+        File fichier = new File(cheminDossier + File.separator + nomProjet + ".xml");
+
+        // On écrit le fichier
+        try {
+            PrintWriter ecritureDuFichierTexte = new PrintWriter(fichier);
+            ecritureDuFichierTexte.println(GestionnaireXML.createXML(nomProjet));
+            ecritureDuFichierTexte.close();
+        } catch (java.io.IOException e) {
+            System.err.println("Erreur lors de l'écriture du fichier : \"" + fichier + "\"");
+            e.printStackTrace();
+        }
     }
 }

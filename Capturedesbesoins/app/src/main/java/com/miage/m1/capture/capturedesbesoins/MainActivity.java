@@ -114,6 +114,9 @@ public class MainActivity extends CustomActivity implements View.OnClickListener
 
                     // On met à jour la liste des Projets
                     remplirListeProjets();
+
+                    // On crée le XML associé au projet
+                    GestionnaireFichiers.createXMLFile(MainActivity.this, nomProjet);
                 } else {
                     Toast.makeText(getApplicationContext(), "ProjetActivity " + nomProjet + " existe déja !", Toast.LENGTH_SHORT).show();
                 }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.miage.m1.capture.capturedesbesoins.Services.GestionnaireFichiers;
+import com.miage.m1.capture.capturedesbesoins.Services.GestionnaireXML;
 
 public class ProjetActivity extends CustomActivity implements View.OnClickListener {
 
@@ -50,6 +51,7 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
 
         // Texte de description du Projet
         TextView description = (TextView) findViewById(R.id.description_projet);
+        description.setText(GestionnaireXML.getDescriptionDuProjet(this, nomProjet));
 
     }
 
