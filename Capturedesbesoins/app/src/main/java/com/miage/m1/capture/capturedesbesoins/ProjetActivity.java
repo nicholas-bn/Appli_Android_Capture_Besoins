@@ -1,12 +1,17 @@
 package com.miage.m1.capture.capturedesbesoins;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miage.m1.capture.capturedesbesoins.services.GestionnaireFichiers;
 import com.miage.m1.capture.capturedesbesoins.services.GestionnaireXML;
@@ -58,15 +63,17 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Texte de description du Projet
-        TextView description = (TextView) findViewById(R.id.description_projet);
-        description.setText(projet.getDescription());
+
 
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
+        // Texte de description du Projet
+        TextView description = (TextView) findViewById(R.id.description_projet);
+        description.setText(projet.getDescription());
+
         // On récupère la liste des Fichiers présents sur le téléphone
         ArrayList<Fichier> listeFichiers = GestionnaireFichiers.getListeFichiersDuProjet(this, nomProjet);
 
@@ -75,6 +82,54 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
 
         // On met à jour le XML
         GestionnaireFichiers.majXML(this, projet);
+    }
+
+    private void ouvrirModification(final View view) {
+
+        // Dialogue pour choisir le nom du nouveau projet
+        AlertDialog.Builder building = new AlertDialog.Builder(this);
+
+        // Fenetre pour écrire le nom du projet
+        final EditText choixNomProjet = new EditText(building.getContext());
+        choixNomProjet.setText(projet.getDescription());
+        building.setView(choixNomProjet);
+
+        // Titre
+        building.setTitle("Choisir la description du Projet :");
+
+        // Définir le comportement du bouton "OK"
+        building.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // Nom du projet choisi
+                String newDescription = choixNomProjet.getText().toString();
+
+                // Si ce n'est pas le même
+                if (newDescription.equals(projet.getDescription()) == false) {
+                    projet.setDescription(newDescription);
+
+                    Snackbar.make(view, "Description modifiée", Snackbar.LENGTH_LONG).show();
+
+                    // On met à jour la fenetre
+                    onResume();
+                }
+
+            }
+        });
+
+        // Définir le comportement du bouton "Annuler"
+        building.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Si il appuie sur Annuler on fait rien
+                return;
+            }
+        });
+
+        // On le créé et on l'affiche
+        building.create();
+        building.show();
     }
 
 
@@ -104,7 +159,9 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
 
         // Bouton 'crayon' pour modifier le Projet
         if (view.getId() == R.id.modifier_projet) {
-            Snackbar.make(view, "Modification du Projet", Snackbar.LENGTH_LONG).show();
+
+            // Fenètre pour modifier
+            ouvrirModification(view);
         }
     }
 }
