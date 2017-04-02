@@ -132,7 +132,7 @@ public class UploadDrive implements Runnable {
                         InputStream inputStream = new FileInputStream(file);
 
                         if (inputStream != null) {
-                            byte[] data = new byte[1024];
+                            byte[] data = new byte[(int)file.length()];
                             while (inputStream.read(data) != -1) {
                                 outputStream.write(data);
                             }
