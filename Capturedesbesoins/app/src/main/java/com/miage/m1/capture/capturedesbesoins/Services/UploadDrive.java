@@ -111,8 +111,8 @@ public class UploadDrive implements Runnable {
 
             } else { // Si c'est un fichier
 
-                // Si il existe pas on l'upload
-                if (!doesFolderExists(file.getName())) {
+                // Si il existe PAS on l'upload
+                if ( ! doesFolderExists(file.getName())) {
                     Log.i(TAG, file.getName() + " est pas sur le DRIVE");
 
                     // On récupére le DriveID du folder dans lequel on le range

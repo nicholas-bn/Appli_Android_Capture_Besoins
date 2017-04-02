@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         zoneDeTexte = (EditText) findViewById(R.id.texte);
 
         // Dossier contenant les fichiers textes
-        dossierTexte = new File(cheminProjet + File.separator + "Text");
+        dossierTexte = new File(cheminProjet + File.separator + nomProjet+"-Texte");
         Log.e("AAAAAAAAA ", "Dossier Texte : " + dossierTexte);
 
         // Si il existe pas on le créé

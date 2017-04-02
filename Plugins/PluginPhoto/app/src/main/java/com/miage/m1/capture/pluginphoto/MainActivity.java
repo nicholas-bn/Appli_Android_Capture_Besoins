@@ -46,7 +46,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         take_photo.setOnClickListener(this);
     }
 
-    private void lancerAppareilPhoto() {File dossierPhoto = new File(cheminProjet, "PHOTO");
+    private void lancerAppareilPhoto() {
+
+        File dossierPhoto = new File(cheminProjet, nomProjet+"-Photo");
         Uri uri = Uri.fromFile(dossierPhoto);
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
