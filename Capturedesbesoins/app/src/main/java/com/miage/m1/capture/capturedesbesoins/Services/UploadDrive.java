@@ -42,8 +42,10 @@ public class UploadDrive implements Runnable {
     private File lastFileLocalUsed = null;
     private DriveId lastDriveIDUsed = null;
 
+    // Dossier parent des projets
     File parentProjectFolders;
 
+    // Lien vers l'API Google Drive
     private static GoogleApiClient mGoogleApiClient;
 
     public Activity activity;
@@ -118,20 +120,28 @@ public class UploadDrive implements Runnable {
                     // On récupére le DriveID du folder dans lequel on le range
                     DriveId driveid = getFolderParentDriveID(file);
 
+                    // Requête synchrone pour créer du contenu sur le drive,  on créé le fichier
                     DriveApi.DriveContentsResult result = Drive.DriveApi.newDriveContents(mGoogleApiClient).await();
 
+                    // Vérification si c'est un succés
                     if (!result.getStatus().isSuccess()) {
                         Log.i(TAG, "Erreur en essayant de créer le contenu du nouveau fichier.");
                         return;
                     }
 
+                    // On récupère le DriveContent sur lequel on peut utiliser les input/output Stream
                     final DriveContents driveContents = result.getDriveContents();
 
+                    // On récupére l'outputstream du fichier sur le drive
                     OutputStream outputStream = driveContents.getOutputStream();
                     try {
+                        // On récupère l'inputstream de notre fichier local
                         InputStream inputStream = new FileInputStream(file);
 
+                        // On boucle sur l'inputstream pour écrire sur le fichier du Drive
                         if (inputStream != null) {
+
+                            // On met (int)file.length() pour éviter d'avoir des NULL en fin de fichier
                             byte[] data = new byte[(int)file.length()];
                             while (inputStream.read(data) != -1) {
                                 outputStream.write(data);
@@ -144,6 +154,7 @@ public class UploadDrive implements Runnable {
                         Log.e(TAG, e.getMessage());
                     }
 
+                    // On va définir le MimeType du fichier qu'on va envoyé sur le drive suivant son extension donné par les plugins
                     String mimeType = "";
                     String nameFile = file.getName();
                     if (nameFile.endsWith(".jpg")) {
@@ -156,11 +167,13 @@ public class UploadDrive implements Runnable {
                         mimeType = "text/*";
                     }
 
+                    // On instancie les métadonnées du fichier
                     MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
                             .setTitle(file.getName())
                             .setMimeType(mimeType)
                             .setStarred(true).build();
 
+                    // On créé le fichier dans le dossier parent
                     DriveFolder parentRepertory = driveid.asDriveFolder();
                     DriveFolder.DriveFileResult fileResult = parentRepertory.createFile(mGoogleApiClient, changeSet, driveContents).await();
 
@@ -174,9 +187,14 @@ public class UploadDrive implements Runnable {
 
     }
 
+    // Query pour retrouver le driveID du dossier parent au fichier donné en parametre
     public DriveId getFolderParentDriveID(File f) {
         DriveId retour = null;
+
+        // On construit la requéte en donnant le nom du dossier parent
         Query query = new Query.Builder().addFilter(Filters.eq(SearchableField.TITLE, f.getParentFile().getName())).build();
+
+        // On récupére le buffer de meta donnés renvoyés par la requete synchrone a l'appel de  await()
         DriveApi.MetadataBufferResult mdResultSet = Drive.DriveApi.query(mGoogleApiClient, query).await();
         for (Metadata metadata : mdResultSet.getMetadataBuffer()) {
             if (metadata.getTitle().equals(f.getParentFile().getName())) {
@@ -196,12 +214,18 @@ public class UploadDrive implements Runnable {
     public void createFolder(File title, DriveId driveid) {
         // On créé le dossier user
         DriveFolder folder = driveid.asDriveFolder();
+
+        // On construit la requéte en donnant le nom du dossier qu'on veut créer
         MetadataChangeSet changeSet = new MetadataChangeSet.Builder().setTitle(title.getName()).build();
+
+        // On récupére le buffer de meta donnés renvoyés par la requete synchrone a l'appel de  await()
         DriveFolder.DriveFolderResult dfr = folder.createFolder(mGoogleApiClient, changeSet).await();
         if (!dfr.getStatus().isSuccess()) {
             Log.i(TAG, "Probleme lors de la création du dossier " + title.getName());
             return;
         }
+        
+        // On récupére le DriveID
         lastDriveIDUsed = dfr.getDriveFolder().getDriveId();
         lastFileLocalUsed = title;
         Log.i(TAG, "Dossier " + title.getName() + " créé.");
