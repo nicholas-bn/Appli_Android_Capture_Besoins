@@ -1,29 +1,39 @@
 package com.miage.m1.capture.capturedesbesoins.services;
 
 import android.app.Activity;
+import android.os.ParcelFileDescriptor;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.Menu;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveContents;
+import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataChangeSet;
+import com.google.android.gms.drive.metadata.SearchableCollectionMetadataField;
 import com.google.android.gms.drive.query.Filters;
 import com.google.android.gms.drive.query.Query;
 import com.google.android.gms.drive.query.SearchableField;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 /**
  * Created by Nicho on 26/03/2017.
@@ -36,7 +46,7 @@ public class UploadDrive implements Runnable {
     private ArrayList<File> fileList = new ArrayList<File>();
 
     // Ce sera le dossier racine sur le Drive de l'utilisateur
-    private static final String dossierRacineDrive = "Capture des besoins - Android app";
+    private static final String dossierRacineDrive = "Capture des besoins - Android app 1";
 
     // On conserve le dernier DriveId et son adresse local utilisé pour définir si le suivant est un enfant ou non
     private File lastFileLocalUsed = null;
@@ -96,7 +106,7 @@ public class UploadDrive implements Runnable {
     }
 
     // Méthode pour envoyer tous les fichiers et dossiers
-    public void uploadSubFoldersAndSubFiles() {
+    public void uploadSubFoldersAndSubFiles(){
 
         // On parcours l'arbo local
         for (File file : fileList) {
@@ -113,8 +123,11 @@ public class UploadDrive implements Runnable {
 
             } else { // Si c'est un fichier
 
+                String nomDossierParent = file.getParentFile().getName();
+                Log.i(TAG, "Parent de "+file.getName()+" est "+nomDossierParent);
+
                 // Si il existe PAS on l'upload
-                if ( ! doesFolderExists(file.getName())) {
+                if ( ! doesFolderExistsWithParentGiven(file.getName(), nomDossierParent)) {
                     Log.i(TAG, file.getName() + " est pas sur le DRIVE");
 
                     // On récupére le DriveID du folder dans lequel on le range
@@ -177,14 +190,92 @@ public class UploadDrive implements Runnable {
                     DriveFolder parentRepertory = driveid.asDriveFolder();
                     DriveFolder.DriveFileResult fileResult = parentRepertory.createFile(mGoogleApiClient, changeSet, driveContents).await();
 
-                } else { // Autrement on vérifie si c'est le bon
+                } else { // Autrement on écrit par dessus
 
+                    DriveFile driveFile = lastDriveIDUsed.asDriveFile();
+                    DriveApi.DriveContentsResult driveContentsResult = driveFile.open(mGoogleApiClient, DriveFile.MODE_WRITE_ONLY, null).await();
+
+                    DriveContents contents = driveContentsResult.getDriveContents();
+                    // On récupére l'outputstream du fichier sur le drive
+                    OutputStream outputStream = contents.getOutputStream();
+                    try {
+                        // On récupère l'inputstream de notre fichier local
+                        InputStream inputStream = new FileInputStream(file);
+
+                        // On boucle sur l'inputstream pour écrire sur le fichier du Drive
+                        if (inputStream != null) {
+
+                            // On met (int)file.length() pour éviter d'avoir des NULL en fin de fichier
+                            byte[] data = new byte[(int)file.length()];
+                            while (inputStream.read(data) != -1) {
+                                outputStream.write(data);
+                            }
+                            inputStream.close();
+                        }
+
+                        outputStream.close();
+                    } catch (IOException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+
+                    contents.commit(mGoogleApiClient, null).setResultCallback(new ResultCallback<Status>() {
+                        @Override
+                        public void onResult(Status status) {
+                            if(status.isSuccess())
+                                Log.i(TAG, "Ecriture avec succés ! ");
+                            else
+                                Log.i(TAG, "ECHER de l'eériture  ! ");
+                        }
+                    });
                 }
             }
         }
 
 
 
+    }
+
+    public boolean doesFolderExistsWithParentGiven(String titre, String nameFolderParent) {
+
+        // Récup le driveID du parent
+        Query queryParent = new Query.Builder().addFilter(Filters.eq(SearchableField.TITLE, nameFolderParent)).build();
+        DriveApi.MetadataBufferResult mdResultSetParent = Drive.DriveApi.query(mGoogleApiClient, queryParent).await();
+
+        DriveId driveIdParent = null;
+
+        // On parcourt les metadata pour trouver notre dossier parent
+        for (Metadata metadata : mdResultSetParent.getMetadataBuffer()) {
+            if (metadata.getTitle().equals(nameFolderParent)) {
+                driveIdParent = metadata.getDriveId();
+            }
+        }
+
+        // Pour éviter les fuites de mémoires internes
+        mdResultSetParent.release();
+
+        // Récupe le driveID du fichier connaissant le driveID du parent
+        Query query = new Query.Builder().addFilter(Filters.and(Filters.eq(SearchableField.TITLE, titre),
+                                                                Filters.in(SearchableField.PARENTS, driveIdParent))
+                                                    ).build();
+        DriveApi.MetadataBufferResult mdResultSet = Drive.DriveApi.query(mGoogleApiClient, query).await();
+
+        // Booléen pour savoir si on a trouvé le dossier qu'on cherche
+        boolean dossierTrouver = false;
+
+        // On parcourt les metadata pour trouver si notre dossier est déja présent
+        for (Metadata metadata : mdResultSet.getMetadataBuffer()) {
+            if (metadata.getTitle().equals(titre)) {
+                Log.i(TAG, "Dossier/fichier existe déja : " + metadata.getTitle());
+                dossierTrouver = true;
+                lastDriveIDUsed = metadata.getDriveId();
+                lastFileLocalUsed = parentProjectFolders;
+                break;
+            }
+        }
+        // On release le buffer pour éviter les fuites mémoires
+        mdResultSet.getMetadataBuffer().release();
+
+        return dossierTrouver;
     }
 
     // Query pour retrouver le driveID du dossier parent au fichier donné en parametre
@@ -224,7 +315,7 @@ public class UploadDrive implements Runnable {
             Log.i(TAG, "Probleme lors de la création du dossier " + title.getName());
             return;
         }
-        
+
         // On récupére le DriveID
         lastDriveIDUsed = dfr.getDriveFolder().getDriveId();
         lastFileLocalUsed = title;
@@ -241,7 +332,7 @@ public class UploadDrive implements Runnable {
         // On parcourt les metadata pour trouver si notre dossier est déja présent
         for (Metadata metadata : mdResultSet.getMetadataBuffer()) {
             if (metadata.getTitle().equals(titre)) {
-                Log.i(TAG, "Dossier existe déja : " + metadata.getTitle());
+                Log.i(TAG, "Dossier/fichier existe déja : " + metadata.getTitle());
                 dossierTrouver = true;
                 lastDriveIDUsed = metadata.getDriveId();
                 lastFileLocalUsed = parentProjectFolders;
@@ -279,7 +370,7 @@ public class UploadDrive implements Runnable {
         // On parcourt les metadata pour trouver si notre dossier est déja présent
         for (Metadata metadata : mdResultSet.getMetadataBuffer()) {
             if (metadata.getTitle().equals(dossierRacineDrive)) {
-                Log.i(TAG, "Dossier existe déja : " + metadata.getTitle());
+                Log.i(TAG, "Racine existe déja : " + metadata.getTitle());
                 dossierTrouver = true;
                 lastDriveIDUsed = metadata.getDriveId();
                 break;

@@ -119,6 +119,8 @@ public class LiaisonDrive implements GoogleApiClient.ConnectionCallbacks,
     @Override
     public void onConnected(Bundle connectionHint) {
 
+        Log.i(TAG, "GoogleApiClient a réussi à se connecter.");
+
         Toast.makeText(activity.getApplicationContext(), "Connecté", Toast.LENGTH_LONG).show();
 
         MenuItem item = menu.findItem(R.id.drive);
