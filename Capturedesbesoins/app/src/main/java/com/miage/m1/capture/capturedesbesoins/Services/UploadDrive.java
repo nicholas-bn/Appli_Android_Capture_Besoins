@@ -192,10 +192,15 @@ public class UploadDrive implements Runnable {
 
                 } else { // Autrement on écrit par dessus
 
+                    // On transforme le driveID en driveFil
                     DriveFile driveFile = lastDriveIDUsed.asDriveFile();
+
+                    // On l'open (en write only), ce qui permet de récupérer le driveContentResult
                     DriveApi.DriveContentsResult driveContentsResult = driveFile.open(mGoogleApiClient, DriveFile.MODE_WRITE_ONLY, null).await();
 
+                    // On récupére le driveCOntents car il permet d'obtenir le OutputStream
                     DriveContents contents = driveContentsResult.getDriveContents();
+
                     // On récupére l'outputstream du fichier sur le drive
                     OutputStream outputStream = contents.getOutputStream();
                     try {
@@ -218,13 +223,14 @@ public class UploadDrive implements Runnable {
                         Log.e(TAG, e.getMessage());
                     }
 
+                    // Aprés l'écriture sur l'OutputStream du DriveContents on commit les modifications et on s'assure du bon résultat
                     contents.commit(mGoogleApiClient, null).setResultCallback(new ResultCallback<Status>() {
                         @Override
                         public void onResult(Status status) {
                             if(status.isSuccess())
                                 Log.i(TAG, "Ecriture avec succés ! ");
                             else
-                                Log.i(TAG, "ECHER de l'eériture  ! ");
+                                Log.i(TAG, "ECHEC de l'eériture  ! ");
                         }
                     });
                 }

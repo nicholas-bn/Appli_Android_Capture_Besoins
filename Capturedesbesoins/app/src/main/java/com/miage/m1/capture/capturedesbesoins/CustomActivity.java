@@ -100,6 +100,16 @@ public class CustomActivity extends AppCompatActivity {
             }
         }
 
+        if(id == R.id.pullFromDrive) {
+            // Si l'utilisateur n'est pas connecté
+            if(!liaisonDrive.isConnected()){
+                Log.i("PULL FROM DRIVE", "Tentative de récupérer du drive sans connexion au compte Google");
+                Snackbar.make(this.getCurrentFocus(), "Vous devez vous connecter sur votre compte Google pour utiliser votre Drive.", Snackbar.LENGTH_LONG).show();
+            } else {
+                liaisonDrive.askedToPullFromDrive();
+            }
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }

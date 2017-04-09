@@ -149,4 +149,12 @@ public class LiaisonDrive implements GoogleApiClient.ConnectionCallbacks,
         t.start();
     }
 
+    // Méthode appellé lors du clic du bouton "Récupérer du Drive"
+    public void askedToPullFromDrive() {
+
+        DownloadDrive dd = new DownloadDrive(activity, menu, mGoogleApiClient);
+        Thread t = new Thread(dd);
+        t.start();
+    }
+
 }
