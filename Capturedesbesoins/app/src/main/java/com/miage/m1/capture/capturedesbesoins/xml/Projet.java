@@ -62,11 +62,34 @@ public class Projet {
                 listeFichiers.add(fichier);
             }
         }
+
+        // On efface les fichiers qui ne sont plus présents :
+        ArrayList<Fichier> nouvelleListe = new ArrayList<>();
+
+        for (Fichier fichier : listeFichiers) {
+            if (containFichier(fichiers, fichier) == true) {
+                nouvelleListe.add(fichier);
+            }
+        }
+
+        listeFichiers = nouvelleListe;
+        // TODO Effacer les fichiers supprimés
     }
 
-    public boolean containFichier(Fichier fichierARechercher){
+    public boolean containFichier(Fichier fichierARechercher) {
         // Pour chaque Fichier à comparer :
         for (Fichier fichier : listeFichiers) {
+            // Si le fichier n'est pas dans notre liste
+            if (fichier.getNom().equals(fichierARechercher.getNom())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean containFichier(ArrayList<Fichier> liste, Fichier fichierARechercher) {
+        // Pour chaque Fichier à comparer :
+        for (Fichier fichier : liste) {
             // Si le fichier n'est pas dans notre liste
             if (fichier.getNom().equals(fichierARechercher.getNom())) {
                 return true;

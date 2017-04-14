@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +21,8 @@ import java.net.URI;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String AUTHORITY=
+            BuildConfig.APPLICATION_ID+".provider";
     private String nomProjet;
     private String cheminProjet;
 
@@ -49,11 +53,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void lancerAppareilPhoto() {
 
         File dossierPhoto = new File(cheminProjet, nomProjet+"-Photo");
-        Uri uri = Uri.fromFile(dossierPhoto);
+        // Si il existe pas on le créé
+        if (!dossierPhoto.exists())
+            Log.e("AAAAAAAAA  ccc ", "Dossier Photo : " + dossierPhoto.mkdirs());
+        //dossierTexte.mkdirs();
+
+
+        Uri uri =  FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider",new File(dossierPhoto,"test.jpg"));;
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                Uri.withAppendedPath(uri, "test.jpg"));
+                uri);
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
