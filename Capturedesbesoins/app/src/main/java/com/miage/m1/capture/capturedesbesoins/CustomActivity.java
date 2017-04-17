@@ -1,11 +1,14 @@
 package com.miage.m1.capture.capturedesbesoins;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import android.support.v7.app.AlertDialog;
 
 import com.miage.m1.capture.capturedesbesoins.services.LiaisonDrive;
 
@@ -106,7 +109,27 @@ public class CustomActivity extends AppCompatActivity {
                 Log.i("PULL FROM DRIVE", "Tentative de récupérer du drive sans connexion au compte Google");
                 Snackbar.make(this.getCurrentFocus(), "Vous devez vous connecter sur votre compte Google pour utiliser votre Drive.", Snackbar.LENGTH_LONG).show();
             } else {
-                liaisonDrive.askedToPullFromDrive();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                builder.setTitle("Attention");
+                builder.setMessage("Êtes-vous sûr de vouloir récupérer du Drive (le contenu local sera écrasé) ?");
+
+                builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        liaisonDrive.askedToPullFromDrive();
+                    }
+                });
+                builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+
+                builder.create();
+                builder.show();
             }
         }
 
