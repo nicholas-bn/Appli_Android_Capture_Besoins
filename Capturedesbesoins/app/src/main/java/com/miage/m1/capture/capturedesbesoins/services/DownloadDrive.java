@@ -79,8 +79,8 @@ public class DownloadDrive implements Runnable {
             Snackbar.make(activity.getCurrentFocus(), "Fin du download", Snackbar.LENGTH_LONG).show();
 
             // Permet de rafraichir l'activité aprés avoir supprimer le contenu local
-            //activity.finish();
-            //activity.startActivity(activity.getIntent());
+            activity.finish();
+            activity.startActivity(activity.getIntent());
         }
     }
 
