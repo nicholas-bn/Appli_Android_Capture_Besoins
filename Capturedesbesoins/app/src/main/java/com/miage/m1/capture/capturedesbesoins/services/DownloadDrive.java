@@ -8,11 +8,17 @@ import android.view.Menu;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi;
+import com.google.android.gms.drive.DriveContents;
+import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataBuffer;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import static android.media.CamcorderProfile.get;
@@ -23,24 +29,26 @@ import static android.media.CamcorderProfile.get;
 
 public class DownloadDrive implements Runnable {
 
+    // Tag qui permet de faciliter la lecture de l'output
     private String TAG = "GOOGLE DOWNLOAD DRIVE";
 
     // Lien vers l'API Google Drive
     private static GoogleApiClient mGoogleApiClient;
 
+    // Activité d'où c'est lancé, c'est nécessaire pour lui demander de se refresh aprés le DL depuis le Drive
     public Activity activity;
 
+    // Menu
     private Menu menu;
 
-    ArrayList<File> listLocalFiles;
-
+    // Permet de garder le titre du root pour éviter de le créer plus tard et ainsi éviter le décalage de dossier quand on DL
     String rootDriveName = "";
 
+    // Constructeur
     public DownloadDrive(Activity activity, Menu menu, GoogleApiClient mGoogleApiClient) {
         this.activity = activity;
         this.menu = menu;
         this.mGoogleApiClient = mGoogleApiClient;
-        listLocalFiles = new ArrayList<File>();
     }
 
     @Override
@@ -67,7 +75,7 @@ public class DownloadDrive implements Runnable {
             File subRoot = new File(activity.getExternalFilesDir(null).getAbsolutePath() + File.separator + GestionnaireFichiers.nomDossierMain);
 
             // Si il existe
-            if(subRoot.exists()) {
+            if (subRoot.exists()) {
                 // On nettoie le contenu local avant de le remplacer par le contenu du Drive
                 deleteLocalContent(subRoot);
             }
@@ -105,6 +113,7 @@ public class DownloadDrive implements Runnable {
         folder.delete();
     }
 
+    // Méthode permettant de parcourir le Drive et de recréer la même architecture en local
     public void constructTreeLocal(String pathParent, Metadata metadata) {
 
         // On récupère le type (dossier OU fichier)
@@ -113,17 +122,60 @@ public class DownloadDrive implements Runnable {
         // Si c'est un fichier
         if (ressourceType == DriveId.RESOURCE_TYPE_FILE) {
 
-            Log.i(TAG, "FILE Path : " + pathParent + File.separator + metadata.getTitle());
-            // TODO : créé le fichier en local
+            String newFile = pathParent + File.separator + metadata.getTitle();
+
+            // On affiche le nouveau chemin local
+            Log.i(TAG, "FILE Path : " + newFile);
+
+            // On transforme le driveID en driveFile
+            DriveFile driveFile = metadata.getDriveId().asDriveFile();
+
+            // On l'open (en write only), ce qui permet de récupérer le driveContentResult
+            DriveApi.DriveContentsResult driveContentsResult = driveFile.open(mGoogleApiClient, DriveFile.MODE_READ_ONLY, null).await();
+
+            // On récupére le driveContents car il permet d'obtenir le OutputStream
+            DriveContents contents = driveContentsResult.getDriveContents();
+
+            // On récupère l'InputStream du fichier sur le Drive
+            InputStream inputStream = contents.getInputStream();
+
+            try {
+
+                FileOutputStream fileOutputStream = new FileOutputStream(new File(newFile));
+
+                // On boucle sur l'inputstream pour écrire sur le fichier du Drive
+                if (inputStream != null) {
+
+
+                    // On met (int)file.length() pour éviter d'avoir des NULL en fin de fichier
+                    byte[] data = new byte[(int) metadata.getFileSize()];
+                    while (inputStream.read(data) != -1) {
+                        fileOutputStream.write(data);
+                    }
+                    inputStream.close();
+                }
+
+                fileOutputStream.close();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         } else if (ressourceType == DriveId.RESOURCE_TYPE_FOLDER) { // si c'est un dossier
 
+            // Nouveau chemin
             String newPath;
 
-            if(metadata.getTitle().equals(rootDriveName)){
+            // On l'instancie pas directement, suivant si c'est le root ou non il sera différemment construit
+            if (metadata.getTitle().equals(rootDriveName)) {
+
+                // On construit le nouveau chemin local
                 newPath = pathParent;
                 Log.i(TAG, "FOLDER Path : " + newPath);
-            }else {
+
+            } else {
 
                 // On construit le nouveau chemin local
                 newPath = pathParent + File.separator + metadata.getTitle();
@@ -155,6 +207,7 @@ public class DownloadDrive implements Runnable {
             }
 
             // Pour éviter les fuites mémoires
+            metadataBuffer.release();
             result.release();
         }
     }
