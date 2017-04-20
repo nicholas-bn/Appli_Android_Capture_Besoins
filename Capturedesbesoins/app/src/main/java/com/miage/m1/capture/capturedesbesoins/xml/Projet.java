@@ -38,6 +38,16 @@ public class Projet {
         return listeFichiers;
     }
 
+    public ArrayList<String> getListeFichiersFormatString() {
+
+        ArrayList<String> retourListe = new ArrayList<>();
+
+        for (Fichier f : listeFichiers) {
+            retourListe.add(f.getNom());
+        }
+
+        return retourListe;
+    }
 
     // --- Accesseurs de modification
 

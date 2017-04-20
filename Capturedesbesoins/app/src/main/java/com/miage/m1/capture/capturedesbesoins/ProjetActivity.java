@@ -8,8 +8,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.miage.m1.capture.capturedesbesoins.xml.Projet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProjetActivity extends CustomActivity implements View.OnClickListener {
 
@@ -28,6 +31,8 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
 
     // Informations sur le Projet en cours
     private Projet projet;
+
+    private ListView list_Fichiers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +87,36 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
 
         // On met à jour le XML
         GestionnaireFichiers.majXML(this, projet);
+
+        this.remplirListeFichiers();
+    }
+
+    private void remplirListeFichiers() {
+
+        // Récupération de la ListeView contenant les projets
+        list_Fichiers = (ListView) findViewById(R.id.galerie);
+
+        // On récupère la liste des Projets existants
+        List<String> listNomProjets = projet.getListeFichiersFormatString();
+
+        // Si la liste est vide
+        if (listNomProjets == null) {
+            // On ne fait rien
+            return;
+        }
+
+        // Adapter qui contient les éléments de la liste
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_list_item_1, listNomProjets);
+
+        // On set l'adapter à la ListView
+        list_Fichiers.setAdapter(adapter);
+
+        // On met à jour le texte
+        adapter.notifyDataSetChanged();
+
+        // On ajoute un listener
+        //list_Fichiers.setOnItemClickListener(this);
     }
 
     private void ouvrirModification(final View view) {
