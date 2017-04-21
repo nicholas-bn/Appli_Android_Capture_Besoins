@@ -97,7 +97,7 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
         list_Fichiers = (ListView) findViewById(R.id.galerie);
 
         // On récupère la liste des Projets existants
-        List<String> listNomProjets = projet.getListeFichiersFormatString();
+        List<Ligne_Galerie> listNomProjets = projet.getListeFichiersFormatString();
 
         // Si la liste est vide
         if (listNomProjets == null) {
@@ -106,8 +106,8 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
         }
 
         // Adapter qui contient les éléments de la liste
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_list_item_1, listNomProjets);
+        GalerieAdapter adapter = new GalerieAdapter(this, listNomProjets);
+
 
         // On set l'adapter à la ListView
         list_Fichiers.setAdapter(adapter);

@@ -1,5 +1,11 @@
 package com.miage.m1.capture.capturedesbesoins.xml;
 
+import android.graphics.Color;
+import android.util.Log;
+
+import com.miage.m1.capture.capturedesbesoins.GalerieAdapter;
+import com.miage.m1.capture.capturedesbesoins.Ligne_Galerie;
+
 import java.util.ArrayList;
 
 /**
@@ -38,12 +44,13 @@ public class Projet {
         return listeFichiers;
     }
 
-    public ArrayList<String> getListeFichiersFormatString() {
+    public ArrayList<Ligne_Galerie> getListeFichiersFormatString() {
 
-        ArrayList<String> retourListe = new ArrayList<>();
+        ArrayList<Ligne_Galerie> retourListe = new ArrayList<Ligne_Galerie>();
 
         for (Fichier f : listeFichiers) {
-            retourListe.add(f.getNom());
+            Log.i("Projet : ", f.getNom());
+            retourListe.add(new Ligne_Galerie(Color.GREEN, f.getNom(), "ez"));
         }
 
         return retourListe;

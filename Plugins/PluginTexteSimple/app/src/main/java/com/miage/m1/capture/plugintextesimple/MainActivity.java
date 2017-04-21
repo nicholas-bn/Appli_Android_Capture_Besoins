@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // On récupère le nom du projet sélectionné
         Bundle b = getIntent().getExtras();
         if (b != null) {
-            nomProjet = b.getString("nom");
+            nomProjet = b.getString("nomProjet");
             cheminProjet = b.getString("cheminProjet");
         }
 
