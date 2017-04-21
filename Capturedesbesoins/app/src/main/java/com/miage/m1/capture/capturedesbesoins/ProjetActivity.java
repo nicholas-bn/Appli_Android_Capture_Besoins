@@ -178,7 +178,7 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
 
             // Bundle pour passer en paramètre le nom du projet
             Bundle b = new Bundle();
-            b.putString("nom", nomProjet); // Nom du projet sélectionné
+            b.putString("nomProjet", nomProjet); // Nom du projet sélectionné
             b.putString("cheminProjet", GestionnaireFichiers.getCheminProjet(this, nomProjet));
             intent.putExtras(b);
 

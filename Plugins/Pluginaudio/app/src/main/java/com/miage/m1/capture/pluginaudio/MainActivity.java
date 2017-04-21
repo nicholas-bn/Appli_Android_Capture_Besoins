@@ -16,16 +16,22 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import java.io.File;
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends PluginActivity {
 
-    private String nomProjet;
-    private String cheminProjet;
+    // Chemin du dossier du plugin Son
+    private String cheminDossier;
+
+    // Nom du dossier du plugin Son
+    private String nomDossier;
+
+    // Chemin du Son en cours
+    private String mFileName;
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
-    private static String mFileName = null;
 
     private RecordButton btn_record = null;
     private MediaRecorder mRecorder = null;
@@ -40,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         // Layout associé à l'activité
         setContentView(R.layout.activity_main);
 
+        // Mise en place de la toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -55,21 +62,18 @@ public class MainActivity extends AppCompatActivity {
         // Layout associé à cette Activity
         setContentView(R.layout.activity_main);
 
-        // On récupère le nom du projet sélectionné
-        Bundle b = getIntent().getExtras();
-        if (b != null) {
-            nomProjet = b.getString("nom");
-            cheminProjet = b.getString("cheminProjet");
-        }
-
         // On change le label de l'Activity
         setTitle(nomProjet + " - Son");
 
-        // Record to the external cache directory for visibility
-        mFileName = getExternalCacheDir().getAbsolutePath();
-        mFileName += "/audiorecordtest.3gp";
+        // Nom du dossier du plugin
+        nomDossier = nomProjet + "-Son";
 
-        // ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+        // Chemin du dossier du plugin
+        cheminDossier = cheminProjet + File.separator + nomDossier;
+
+        // Chemin du fichier Son en cours
+        mFileName = cheminDossier + File.separator + getDateHeure();
+
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.content_main);
 
@@ -140,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
         mRecorder.release();
         mRecorder = null;
     }
-
 
 
     @Override
