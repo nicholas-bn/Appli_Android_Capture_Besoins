@@ -17,6 +17,8 @@ import android.view.MenuItem;
 
 import java.io.File;
 import java.net.URI;
+import java.util.Calendar;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // On récupère le nom du projet sélectionné
         Bundle b = getIntent().getExtras();
         if (b != null) {
-            nomProjet = b.getString("nom");
+            nomProjet = b.getString("nomProjet");
             cheminProjet = b.getString("cheminProjet");
         }
 
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //dossierTexte.mkdirs();
 
 
-        Uri uri =  FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider",new File(dossierPhoto,"test.jpg"));;
+        Uri uri =  FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider",new File(dossierPhoto,getDateHeure()+".jpg"));;
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,
@@ -98,6 +100,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         lancerAppareilPhoto();
 
+    }
+
+    public String getDateHeure() {
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+
+        int date = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+
+        String dateHeure = date + "_" + month + "_" + year;
+        dateHeure += "-" + hour + "h" + minute + "m" + second+"s";
+
+        return dateHeure;
     }
 
 
