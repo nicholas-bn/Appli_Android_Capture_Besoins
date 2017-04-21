@@ -18,14 +18,14 @@ import java.util.List;
 
 public class GalerieAdapter extends ArrayAdapter<Ligne_Galerie> {
 
-    public GalerieAdapter(Context context, List<Ligne_Galerie> tweets) {
-        super(context, 0, tweets);
+    public GalerieAdapter(Context context, List<Ligne_Galerie> listeGalerie) {
+        super(context, 0, listeGalerie);
+
+        Log.i("TAILLE    ", ""+getCount()  );
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-
 
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_galerie,parent, false);
@@ -41,7 +41,7 @@ public class GalerieAdapter extends ArrayAdapter<Ligne_Galerie> {
 
         }
 
-
+        //getItem(position) va récupérer l'item [position] de la List<Tweet> tweets
         Ligne_Galerie ligne_galerie = getItem(position);
 
         //il ne reste plus qu'à remplir notre vue

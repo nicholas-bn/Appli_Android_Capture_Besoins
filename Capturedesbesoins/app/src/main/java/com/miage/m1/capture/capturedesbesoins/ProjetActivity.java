@@ -7,20 +7,18 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.miage.m1.capture.capturedesbesoins.services.GestionnaireFichiers;
 import com.miage.m1.capture.capturedesbesoins.services.GestionnaireXML;
 import com.miage.m1.capture.capturedesbesoins.xml.Fichier;
 import com.miage.m1.capture.capturedesbesoins.xml.Projet;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,15 +86,15 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
         // On met à jour le XML
         GestionnaireFichiers.majXML(this, projet);
 
-        this.remplirListeFichiers();
+        this.remplirGalerie();
     }
 
-    private void remplirListeFichiers() {
+    private void remplirGalerie() {
 
-        // Récupération de la ListeView contenant les projets
+        // Récupération de la ListeView pour la Galerie
         list_Fichiers = (ListView) findViewById(R.id.galerie);
 
-        // On récupère la liste des Projets existants
+        // On récupère la liste des fichiers existants
         List<Ligne_Galerie> listNomProjets = projet.getListeFichiersFormatString();
 
         // Si la liste est vide
@@ -108,12 +106,23 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
         // Adapter qui contient les éléments de la liste
         GalerieAdapter adapter = new GalerieAdapter(this, listNomProjets);
 
-
         // On set l'adapter à la ListView
         list_Fichiers.setAdapter(adapter);
 
+        // On indique la taille max de la listView
+        int totalHeight = 0;
+        for (int size = 0; size < adapter.getCount(); size++) {
+            View listItem = adapter.getView(size, null, list_Fichiers);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        //setting listview item in adapter
+        ViewGroup.LayoutParams params = list_Fichiers.getLayoutParams();
+        params.height = totalHeight + (list_Fichiers.getDividerHeight() * (adapter.getCount() - 1));
+        list_Fichiers.setLayoutParams(params);
+
         // On met à jour le texte
-        adapter.notifyDataSetChanged();
+        // adapter.notifyDataSetChanged();
 
         // On ajoute un listener
         //list_Fichiers.setOnItemClickListener(this);
