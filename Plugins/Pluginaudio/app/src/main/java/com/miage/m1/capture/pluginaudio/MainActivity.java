@@ -18,8 +18,16 @@ import android.widget.RelativeLayout;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Locale;
 
-public class MainActivity extends PluginActivity {
+public class MainActivity extends AppCompatActivity {
+
+    // Nom du projet
+    private String nomProjet;
+
+    // Chemin du projet (dossier)
+    private String cheminProjet;
 
     // Chemin du dossier du plugin Son
     private String cheminDossier;
@@ -46,6 +54,22 @@ public class MainActivity extends PluginActivity {
         // Layout associé à l'activité
         setContentView(R.layout.activity_main);
 
+        // On récupère les informations :
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            // Récupération du nom du projet
+            nomProjet = b.getString("nomProjet");
+
+            // Récupération du chemin du projet
+            cheminProjet = b.getString("cheminProjet");
+        }
+
+        Log.i("ALLO", "" + nomProjet);
+
+        // On change le label de l'Activity
+        setTitle(nomProjet + " - Son");
+
+
         // Mise en place de la toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,21 +83,23 @@ public class MainActivity extends PluginActivity {
             }
         });
 
-        // Layout associé à cette Activity
-        setContentView(R.layout.activity_main);
-
-        // On change le label de l'Activity
-        setTitle(nomProjet + " - Son");
-
         // Nom du dossier du plugin
         nomDossier = nomProjet + "-Son";
 
         // Chemin du dossier du plugin
         cheminDossier = cheminProjet + File.separator + nomDossier;
 
-        // Chemin du fichier Son en cours
-        mFileName = cheminDossier + File.separator + getDateHeure();
+        // Création du dossier s'il n'existe pas déja
+        File dossierSon = new File(cheminDossier);
 
+        // Si il existe pas on le créé
+        if (!dossierSon.exists())
+            Log.e("AAAAAAAAA  ccc ", "Dossier Texte : " + dossierSon.mkdirs());
+
+        // Chemin du fichier Son en cours
+        mFileName = cheminDossier + File.separator + getDateHeure() + ".3gp";
+
+        Log.i("Chemin", "" + mFileName);
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.content_main);
 
@@ -89,6 +115,7 @@ public class MainActivity extends PluginActivity {
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         1));
+
     }
 
     public void onRecord(boolean start) {
@@ -158,6 +185,23 @@ public class MainActivity extends PluginActivity {
             mPlayer.release();
             mPlayer = null;
         }
+    }
+
+    public String getDateHeure() {
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+
+        int date = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+
+        String dateHeure = date + "_" + month + "_" + year;
+        dateHeure += "-" + hour + "h" + minute + "m" + second+"s";
+
+        return dateHeure;
     }
 
     @Override
