@@ -40,9 +40,9 @@ public class Fichier {
 
         // Pour chaque Tags :
         for (String tag : listeTags) {
-            tags += tag + "/";
+            tags += "/" + tag;
         }
-
+        tags = tags.substring(1);
         return tags;
     }
 

@@ -8,8 +8,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -121,6 +125,9 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
         params.height = totalHeight + (list_Fichiers.getDividerHeight() * (adapter.getCount() - 1));
         list_Fichiers.setLayoutParams(params);
 
+        registerForContextMenu(list_Fichiers);
+
+
         // On met à jour le texte
         // adapter.notifyDataSetChanged();
 
@@ -176,6 +183,51 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
         building.show();
     }
 
+    private void ajouterTag(final View view, final int index) {
+
+        // Dialogue pour choisir le nom du nouveau projet
+        AlertDialog.Builder building = new AlertDialog.Builder(this);
+
+        // Fenetre pour écrire le nom du projet
+        final EditText choixNomProjet = new EditText(building.getContext());
+        building.setView(choixNomProjet);
+
+        // Titre
+        building.setTitle("Tag :");
+
+        // Définir le comportement du bouton "OK"
+        building.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // Nom du projet choisi
+                String newDescription = choixNomProjet.getText().toString();
+
+                Log.i("CLICK : ", ""+index);
+                projet.getListeFichiers().get(index).addTag(newDescription);
+
+                // On met à jour le XML
+                GestionnaireFichiers.majXML(ProjetActivity.this, projet);
+
+                remplirGalerie();
+
+            }
+        });
+
+        // Définir le comportement du bouton "Annuler"
+        building.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Si il appuie sur Annuler on fait rien
+                return;
+            }
+        });
+
+        // On le créé et on l'affiche
+        building.create();
+        building.show();
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -206,6 +258,36 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
 
             // Fenètre pour modifier
             ouvrirModification(view);
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId()==R.id.galerie) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_galerie, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        int index = info.position;
+        Log.i("CLICK : ", ""+index);
+        switch(item.getItemId()) {
+            case R.id.add:
+                ajouterTag(getCurrentFocus(), index);
+                return true;
+            case R.id.edit:
+                // edit stuff here
+                return true;
+            case R.id.delete:
+                // remove stuff here
+                return true;
+            default:
+                return super.onContextItemSelected(item);
         }
     }
 }

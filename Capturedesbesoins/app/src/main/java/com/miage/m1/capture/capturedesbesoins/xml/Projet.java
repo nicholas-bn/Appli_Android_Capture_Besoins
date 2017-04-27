@@ -50,7 +50,7 @@ public class Projet {
 
         for (Fichier f : listeFichiers) {
             Log.i("Projet : ", f.getNom());
-            retourListe.add(new Ligne_Galerie(Color.GREEN, f.getNom(), "ez"));
+            retourListe.add(new Ligne_Galerie(Color.GREEN, f.getNom(), f.getListeTagsString()));
         }
 
         return retourListe;
