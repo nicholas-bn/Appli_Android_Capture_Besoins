@@ -42,7 +42,12 @@ public class Fichier {
         for (String tag : listeTags) {
             tags += "/" + tag;
         }
-        tags = tags.substring(1);
+
+        // S'il y a au moins un tag
+        if(!tags.equals("")) {
+            // On retire le 1er "/"
+            tags = tags.substring(1);
+        }
         return tags;
     }
 
