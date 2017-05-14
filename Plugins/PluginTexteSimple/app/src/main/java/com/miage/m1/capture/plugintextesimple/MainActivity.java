@@ -319,17 +319,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
 
+        hasBeenLoaded = true;
+        nameUsed = nomFichier;
 
         // TODO Récupérer l'id google user et le nom du projet pour faire data/.../files/<user>/<projet>/...
         // TODO Vérifier au lancement de l'application si il y a une carte SD dispo et définir un booléen
 
+        /*
         // On vérifie si le stockage externe est disponible ou non (carte SD)
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 
         } else { // Si on dispose uniquement du stockage interne
 
         }
-
+*/
 /*        // On informe l'utilisateur si la sauvegarde a été un échec ou non
         AlertDialog.Builder retourSauvegardeSuccesOuEchec = new AlertDialog.Builder(contenuTexte.getContext());
         retourSauvegardeSuccesOuEchec.setMessage("Fichier enregistré avec succés !");
