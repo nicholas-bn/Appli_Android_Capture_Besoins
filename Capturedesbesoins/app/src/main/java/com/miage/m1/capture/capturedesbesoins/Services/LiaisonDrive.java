@@ -9,13 +9,15 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
-
 import com.google.android.gms.drive.DriveId;
 import com.miage.m1.capture.capturedesbesoins.R;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.common.api.ResultCallback;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -57,6 +59,7 @@ public class LiaisonDrive implements GoogleApiClient.ConnectionCallbacks,
             mGoogleApiClient = new GoogleApiClient.Builder(activity)
                     .addApi(Drive.API)
                     .addApi(AppIndex.API)
+                    //.addApi(Auth.GOOGLE_SIGN_IN_API)
                     .addScope(Drive.SCOPE_FILE)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
@@ -77,9 +80,39 @@ public class LiaisonDrive implements GoogleApiClient.ConnectionCallbacks,
     }
 
     public void disconnect() {
-        //Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-        mGoogleApiClient.disconnect();
+
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.clearDefaultAccountAndReconnect().setResultCallback(new ResultCallback<Status>() {
+
+                @Override
+                public void onResult(Status status) {
+
+                    mGoogleApiClient.disconnect();
+                }
+            });
+
+        }
         Toast.makeText(activity.getApplicationContext(), "Déconnecté", Toast.LENGTH_LONG).show();
+    }
+
+    private void signOut() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        Log.i(TAG, "signOut: status = " + status);
+                    }
+                });
+    }
+
+    private void revokeAccess() {
+        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        Log.i(TAG, "revokeAccess: status = " + status);
+                    }
+                });
     }
 
     @Override
