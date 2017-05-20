@@ -12,20 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="@android:color/holo_red_dark">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="@android:color/holo_red_dark"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/holo_red_dark"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
@@ -42,7 +44,7 @@
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@android:drawable/ic_menu_edit"
-        app:backgroundTint="@android:color/holo_blue_dark" />
+        app:backgroundTint="@color/wallet_hint_foreground_holo_dark" />
 
     <!-- Bouton pour créer un projet (bouton "+" en bas à droite) -->
     <android.support.design.widget.FloatingActionButton
@@ -52,6 +54,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_input_add"
-        app:backgroundTint="@color/colorPrimaryDark" />
+        app:backgroundTint="@android:color/holo_red_dark" />
 
 </android.support.design.widget.CoordinatorLayout>

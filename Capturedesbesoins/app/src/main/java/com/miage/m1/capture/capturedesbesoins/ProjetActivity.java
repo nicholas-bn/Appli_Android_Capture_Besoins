@@ -71,7 +71,6 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-
     }
 
     @Override
@@ -203,7 +202,7 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
                 // Nom du projet choisi
                 String newDescription = choixNomProjet.getText().toString();
 
-                Log.i("CLICK : ", ""+index);
+                Log.i("CLICK : ", "" + index);
                 projet.getListeFichiers().get(index).addTag(newDescription);
 
                 // On met à jour le XML
@@ -228,6 +227,39 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
         building.show();
     }
 
+    private void supprimerFichier(final View view, final int index) {
+
+        new AlertDialog.Builder(this)
+                .setTitle("Suppression du fichier")
+                .setMessage("Etes-vous sur de vouloir supprimer ce fichier ?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Log.i("DELETE : ", "" + index);
+
+                        // Récupération du fichier
+                        Fichier fichier = projet.getListeFichiers().get(index);
+
+                        // Suppression du fichier
+                        GestionnaireFichiers.deleteFile(ProjetActivity.this, nomProjet, fichier.getType(), fichier.getNom());
+
+                        // On récupère la liste des Fichiers présents sur le téléphone
+                        ArrayList<Fichier> listeFichiers = GestionnaireFichiers.getListeFichiersDuProjet(ProjetActivity.this, nomProjet);
+
+                        // On ajoute dans Projet ceux qui n'y sont pas (qui viennent d'être crées)
+                        projet.compareAndAddFichiers(listeFichiers);
+
+                        // On met à jour le XML
+                        GestionnaireFichiers.majXML(ProjetActivity.this, projet);
+
+                        remplirGalerie();
+
+                        Snackbar.make(view, "Fichier supprimé", Snackbar.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null).show();
+    }
 
     @Override
     public void onClick(View view) {
@@ -264,7 +296,7 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        if (v.getId()==R.id.galerie) {
+        if (v.getId() == R.id.galerie) {
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.menu_galerie, menu);
         }
@@ -275,8 +307,8 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         int index = info.position;
-        Log.i("CLICK : ", ""+index);
-        switch(item.getItemId()) {
+        Log.i("CLICK : ", "" + index);
+        switch (item.getItemId()) {
             case R.id.add:
                 ajouterTag(getCurrentFocus(), index);
                 return true;
@@ -284,10 +316,12 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
                 // edit stuff here
                 return true;
             case R.id.delete:
-                // remove stuff here
+                supprimerFichier(getCurrentFocus(), index);
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
     }
+
+
 }

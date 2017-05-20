@@ -44,7 +44,7 @@ public class Fichier {
         }
 
         // S'il y a au moins un tag
-        if(!tags.equals("")) {
+        if (!tags.equals("")) {
             // On retire le 1er "/"
             tags = tags.substring(1);
         }

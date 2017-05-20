@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/add"
         android:icon="@android:drawable/ic_menu_add"
-        android:title="add" />
+        android:title="ajouter Tag" />
 
     <item android:id="@+id/edit"
         android:icon="@android:drawable/ic_menu_edit"
@@ -10,5 +10,5 @@
 
     <item android:id="@+id/delete"
         android:icon="@android:drawable/ic_menu_delete"
-        android:title="remove" />
+        android:title="supprimer" />
 </menu>

@@ -1,8 +1,6 @@
 package com.miage.m1.capture.capturedesbesoins.services;
 
 import android.app.Activity;
-import android.content.Context;
-import android.os.Environment;
 
 import com.miage.m1.capture.capturedesbesoins.xml.Fichier;
 import com.miage.m1.capture.capturedesbesoins.xml.Projet;
@@ -111,7 +109,28 @@ public class GestionnaireFichiers {
         }
     }
 
-    public static ArrayList<Fichier> getListeFichiersDuProjet(Activity activity, String nomProjet){
+    public static void deleteFile(Activity activity, String nomProjet, String typeFichier, String nomFichier) {
+        try {
+            // Chemin du Dossier à créer
+            String cheminProjet = getCheminProjet(activity, nomProjet);
+
+            File file = new File(cheminProjet+File.separator+typeFichier+File.separator+nomFichier);
+
+            if (file.delete()) {
+                System.out.println(file.getName() + " is deleted!");
+            } else {
+                System.out.println("Delete operation is failed.");
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+    }
+
+    public static ArrayList<Fichier> getListeFichiersDuProjet(Activity activity, String nomProjet) {
         // Liste des Fichiers
         ArrayList<Fichier> listeFichiers = new ArrayList<>();
 
@@ -119,20 +138,20 @@ public class GestionnaireFichiers {
         String cheminDossier = getCheminProjet(activity, nomProjet);
 
         // Dossier du Projet
-        File dossier = new File (cheminDossier);
+        File dossier = new File(cheminDossier);
 
         // On récupère les types de documents (TEXT, IMAGE, SON)
-        File [] types = dossier.listFiles();
+        File[] types = dossier.listFiles();
 
         // Pour chacun de ces types :
-        for(File type : types){
+        for (File type : types) {
             // Si c'est un dossier
-            if(type.isDirectory()){
+            if (type.isDirectory()) {
                 // Tableau des documents
-                File [] documents = type.listFiles();
+                File[] documents = type.listFiles();
 
                 // Pour chacun de ces documents :
-                for(File document : documents){
+                for (File document : documents) {
                     // On crée un objet Fichier
                     Fichier fichier = new Fichier();
 
