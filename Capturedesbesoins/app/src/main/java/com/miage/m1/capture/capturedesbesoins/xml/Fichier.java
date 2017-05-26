@@ -76,4 +76,8 @@ public class Fichier {
         }
     }
 
+    public void setTags(ArrayList<String> tags) {
+            listeTags = tags;
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.miage.m1.capture.capturedesbesoins;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import java.util.Random;
 
 import java.util.List;
 
@@ -44,10 +46,15 @@ public class GalerieAdapter extends ArrayAdapter<Ligne_Galerie> {
         //getItem(position) va récupérer l'item [position] de la List<Tweet> tweets
         Ligne_Galerie ligne_galerie = getItem(position);
 
+        Random rand = new Random();
+        int r = rand.nextInt();
+        int g = rand.nextInt();
+        int b = rand.nextInt();
+
         //il ne reste plus qu'à remplir notre vue
         viewHolder.pseudo.setText(ligne_galerie.getPseudo());
         viewHolder.text.setText(ligne_galerie.getText());
-        viewHolder.avatar.setImageDrawable(new ColorDrawable(ligne_galerie.getColor()));
+        viewHolder.avatar.setImageDrawable(new ColorDrawable(Color.rgb(r, g, b)));
 
         Log.i("GalerieAdapter", position+ " " + ligne_galerie.getPseudo() );
 

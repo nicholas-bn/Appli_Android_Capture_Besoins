@@ -313,7 +313,8 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
                 ajouterTag(getCurrentFocus(), index);
                 return true;
             case R.id.edit:
-                // edit stuff here
+                Log.i("CLICK : ", "Clic dans edit");
+                supprimerUnTag(getCurrentFocus(), index);
                 return true;
             case R.id.delete:
                 supprimerFichier(getCurrentFocus(), index);
@@ -323,5 +324,79 @@ public class ProjetActivity extends CustomActivity implements View.OnClickListen
         }
     }
 
+    public void supprimerUnTag(final View view, final int index){
+        // Récupération du fichier
+        final Fichier fichier = projet.getListeFichiers().get(index);
+        ArrayList<String> listTags = fichier.getListeTags();
+
+        Log.i("CLICK : ", "List Tags pour "+fichier.getNom() +" : ");
+        for (String s : listTags)
+            Log.i("CLICK : ", ""+s);
+
+        if(listTags.size() == 0){
+            Snackbar.make(view, "Aucun tags à supprimer.", Snackbar.LENGTH_LONG).show();
+        } else {
+
+            // Dialogue pour choisir le nom du fichier à ouvrir
+            final AlertDialog.Builder building = new AlertDialog.Builder(view.getContext());
+            building.setTitle("Sélectionnez un Tag à supprimer : ");
+
+            // On ne se préoccupe pas de déclencher un event quand l'user coche une case
+            building.setSingleChoiceItems(listTags.toArray(new CharSequence[listTags.size()]), 0, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    return;
+                }
+            });
+
+            // Définir le comportement du bouton "Supprimer"
+            building.setPositiveButton("Supprimer", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // On récupére les vues de l'alertdialog
+                    ListView lw = ((AlertDialog) dialog).getListView();
+
+                    // On récupére la case coché
+                    String checkedItem = (String) lw.getAdapter().getItem(lw.getCheckedItemPosition());
+
+                    ArrayList<String> listTagsFile = fichier.getListeTags();
+                    listTagsFile.remove(checkedItem);
+                    fichier.setTags(listTagsFile);
+
+                    // On récupère la liste des Fichiers présents sur le téléphone
+                    ArrayList<Fichier> listeFichiers = GestionnaireFichiers.getListeFichiersDuProjet(ProjetActivity.this, nomProjet);
+
+                    // On ajoute dans Projet ceux qui n'y sont pas (qui viennent d'être crées)
+                    projet.compareAndAddFichiers(listeFichiers);
+
+                    // On met à jour le XML
+                    GestionnaireFichiers.majXML(ProjetActivity.this, projet);
+
+                    remplirGalerie();
+
+                    for (String s : listTagsFile)
+                        Log.i("CLICK : ", ""+s);
+
+                    Log.i("CLICK : ", "ON SUPPRIIIIIIIIIIIIME : "+checkedItem);
+                }
+            });
+
+            // Définir le comportement du bouton "Annuler"
+            building.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Si il appuie sur Annuler on fait rien
+                    return;
+                }
+            });
+
+            // On le créé et on l'affiche
+            building.create();
+            building.show();
+
+            Log.i("CLICK : ", "fini");
+        }
+
+    }
 
 }
