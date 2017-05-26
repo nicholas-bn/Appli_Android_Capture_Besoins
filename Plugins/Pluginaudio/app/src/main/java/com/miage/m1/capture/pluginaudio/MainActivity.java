@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     // Chemin du dossier du plugin Son
     private String cheminDossier;
 
+    // Chemin fichier
+    private String cheminFichier;
+
     // Nom du dossier du plugin Son
     private String nomDossier;
 
@@ -62,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
             // Récupération du chemin du projet
             cheminProjet = b.getString("cheminProjet");
-        }
 
-        Log.i("ALLO", "" + nomProjet);
+            cheminFichier = b.getString("cheminFichier");
+        }
 
         // On change le label de l'Activity
         setTitle(nomProjet + " - Son");
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Nom du dossier du plugin
-        nomDossier = nomProjet + "-Son";
+        nomDossier = nomProjet + "-"+getString(R.string.app_name);
 
         // Chemin du dossier du plugin
         cheminDossier = cheminProjet + File.separator + nomDossier;
@@ -96,8 +99,16 @@ public class MainActivity extends AppCompatActivity {
         if (!dossierSon.exists())
             Log.e("AAAAAAAAA  ccc ", "Dossier Texte : " + dossierSon.mkdirs());
 
-        // Chemin du fichier Son en cours
-        mFileName = cheminDossier + File.separator + getDateHeure() + ".3gp";
+        // - Si on a passé un fichier en paramètre
+        if(cheminFichier != null) {
+            Log.i("Chargement", cheminFichier);
+
+            mFileName = cheminFichier;
+        }else{
+            // Chemin du fichier Son en cours
+            mFileName = cheminDossier + File.separator + getDateHeure() + ".3gp";
+        }
+
 
         Log.i("Chemin", "" + mFileName);
 
