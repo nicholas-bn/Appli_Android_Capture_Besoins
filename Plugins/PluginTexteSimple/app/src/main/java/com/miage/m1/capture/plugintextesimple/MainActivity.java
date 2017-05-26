@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // Chemin du Projet
     private String cheminProjet;
 
+    // Chemin fichier
+    private String cheminFichier;
+
     // Dossier des fichiers textes
     private File dossierTexte;
 
@@ -45,9 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // En liaison avec "hasBeenLoaded" pour enregistrer le nom du fichier load
     private String nameUsed = "";
-
-    // Bouton '+' pour créer un nouveau document Texte
-    private FloatingActionButton btn_newTexte;
 
     // Bouton pour sauvegarder un Texte
     private Button btn_save;
@@ -70,11 +70,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (b != null) {
             nomProjet = b.getString("nomProjet");
             cheminProjet = b.getString("cheminProjet");
+            cheminFichier = b.getString("cheminFichier");
         }
 
-
         // On change le label de l'Activity
-        setTitle(nomProjet + " - Texte simple");
+        setTitle(nomProjet + " - " + getString(R.string.app_name));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -95,13 +95,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         zoneDeTexte = (EditText) findViewById(R.id.texte);
 
         // Dossier contenant les fichiers textes
-        dossierTexte = new File(cheminProjet + File.separator + nomProjet+"-Texte");
+        dossierTexte = new File(cheminProjet + File.separator + nomProjet + "-"+getString(R.string.app_name));
         Log.e("AAAAAAAAA ", "Dossier Texte : " + dossierTexte);
 
         // Si il existe pas on le créé
         if (!dossierTexte.exists())
             Log.e("AAAAAAAAA  ccc ", "Dossier Texte : " + dossierTexte.mkdirs());
         //dossierTexte.mkdirs();
+
+
+        // - Si on a passé un fichier en paramètre
+        if(cheminFichier != null){
+            Log.i("Chargement", cheminFichier);
+            // On ouvre le fichier
+            charger_fichier_texte(cheminFichier);
+        }
     }
 
     private void clean_and_new(View v) {
@@ -182,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     // On récupére la case coché
                     String checkedItem = (String) lw.getAdapter().getItem(lw.getCheckedItemPosition());
-                    charger_fichier_texte(checkedItem);
+                    charger_fichier_texte_from_nom_fichier(checkedItem);
                 }
             });
 
@@ -202,10 +210,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         building.show();
     }
 
-    private void charger_fichier_texte(String nomFichier) {
+    private void charger_fichier_texte_from_nom_fichier(String nomFichier) {
+        // On construit le chemin
+        String chemin = dossierTexte.getAbsolutePath() + File.separator + nomFichier;
+
+        // On charge le fichier
+        charger_fichier_texte(chemin);
+    }
+
+    private void charger_fichier_texte(String chemin) {
 
         // On construit l'adresse du fichier à charger
-        File fichierACharger = new File(dossierTexte.getAbsolutePath() + File.separator + nomFichier);
+        File fichierACharger = new File(chemin);
         System.out.println("fichierACharger : " + fichierACharger);
 
         // On créé un StringBuilder pour gagner de la perf
@@ -231,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // On retient que le fichier a été chargé et son nom
         hasBeenLoaded = true;
-        nameUsed = nomFichier;
+        nameUsed = fichierACharger.getName();
 
     }
 

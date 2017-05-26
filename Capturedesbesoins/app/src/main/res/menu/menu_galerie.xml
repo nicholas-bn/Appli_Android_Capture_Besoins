@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/add"
+    <item android:id="@+id/addTag"
         android:icon="@android:drawable/ic_menu_add"
         android:title="Ajouter un Tag" />
 
-    <item android:id="@+id/edit"
+    <item android:id="@+id/deleteTag"
         android:icon="@android:drawable/ic_menu_edit"
-        android:title="Supprimer un des Tags" />
+        android:title="Supprimer un Tag" />
 
-    <item android:id="@+id/delete"
+    <item android:id="@+id/openFile"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="Ouvrir le fichier" />
+
+    <item android:id="@+id/deleteFile"
         android:icon="@android:drawable/ic_menu_delete"
         android:title="Supprimer le fichier" />
 </menu>

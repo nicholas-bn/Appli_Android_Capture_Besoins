@@ -161,6 +161,9 @@ public class GestionnaireFichiers {
                     // On ajoute son type
                     fichier.setType(type.getName());
 
+                    // On ajout son chemin
+                    fichier.setChemin(document.getAbsolutePath());
+
                     // On l'ajoute à liste des Fichiers
                     listeFichiers.add(fichier);
                 }

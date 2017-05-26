@@ -14,6 +14,9 @@ public class Fichier {
     // Type du fichier (Texte, son, photo)
     public String type;
 
+    // Chemin du fichier
+    public String chemin;
+
     // Liste des Tags
     public ArrayList<String> listeTags;
 
@@ -29,6 +32,14 @@ public class Fichier {
 
     public String getType() {
         return type;
+    }
+    public String getVraiType() {
+        return type.replaceAll(".*-", "").toLowerCase();
+    }
+
+
+    public String getChemin() {
+        return chemin;
     }
 
     public ArrayList<String> getListeTags() {
@@ -60,6 +71,10 @@ public class Fichier {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public void setChemin(String chemin) {
+        this.chemin = chemin;
     }
 
     public void addTag(String tag) {

@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">Plugin Texte Simple</string>
+    <string name="app_name">PluginTexteSimple</string>
+    <string name="name">PluginTexteSimple</string>
     <string name="action_settings">Settings</string>
 </resources>
