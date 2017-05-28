@@ -23,10 +23,11 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String AUTHORITY=
-            BuildConfig.APPLICATION_ID+".provider";
+    private static final String AUTHORITY =
+            BuildConfig.APPLICATION_ID + ".provider";
     private String nomProjet;
     private String cheminProjet;
+    private String cheminFichier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (b != null) {
             nomProjet = b.getString("nomProjet");
             cheminProjet = b.getString("cheminProjet");
+            cheminFichier = b.getString("cheminFichier");
         }
 
         // On change le label de l'Activity
@@ -50,18 +52,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         FloatingActionButton take_photo = (FloatingActionButton) findViewById(R.id.take_photo);
         take_photo.setOnClickListener(this);
+
+        if (cheminFichier != null) {
+
+            // Open file with user selected app
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+
+            Uri uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", new File(cheminFichier));
+
+            intent.setDataAndType(uri, "image/jpeg");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(intent);
+        }
     }
 
     private void lancerAppareilPhoto() {
 
-        File dossierPhoto = new File(cheminProjet, nomProjet+"-Photo");
+        File dossierPhoto = new File(cheminProjet, nomProjet + "-" + getString(R.string.app_name));
         // Si il existe pas on le créé
         if (!dossierPhoto.exists())
             Log.e("AAAAAAAAA  ccc ", "Dossier Photo : " + dossierPhoto.mkdirs());
         //dossierTexte.mkdirs();
 
 
-        Uri uri =  FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider",new File(dossierPhoto,getDateHeure()+".jpg"));;
+        Uri uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", new File(dossierPhoto, getDateHeure() + ".jpg"));
+        ;
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,
@@ -114,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int second = calendar.get(Calendar.SECOND);
 
         String dateHeure = date + "_" + month + "_" + year;
-        dateHeure += "-" + hour + "h" + minute + "m" + second+"s";
+        dateHeure += "-" + hour + "h" + minute + "m" + second + "s";
 
         return dateHeure;
     }
