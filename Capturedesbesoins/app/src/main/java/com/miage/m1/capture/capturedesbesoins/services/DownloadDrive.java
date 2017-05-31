@@ -13,6 +13,7 @@ import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataBuffer;
+import com.miage.m1.capture.capturedesbesoins.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -55,7 +56,7 @@ public class DownloadDrive implements Runnable {
     public void run() {
 
         // Ajout d'une info du début du download pour l'user
-        Snackbar.make(activity.getCurrentFocus(), "Début du download depuis le Drive ...", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(activity.findViewById(R.id.listeProjets), "Début du download depuis le Drive ...", Snackbar.LENGTH_LONG).show();
 
         // On vérifie que le drive n'est pas vide
         Metadata root = getRootFolder();
@@ -64,7 +65,7 @@ public class DownloadDrive implements Runnable {
         if (root == null) {
 
             // Ajout d'une info pour l'user qu'il y a eu un problème lors du DL (Drive vide ou erreur de requéte)
-            Snackbar.make(activity.getCurrentFocus(), "Erreur lors du download : Vous n'avez aucun fichier de l'application sur le drive, ou une requête à Google s'est mal passé.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(activity.findViewById(R.id.listeProjets), "Erreur lors du download : Vous n'avez aucun fichier de l'application sur le drive, ou une requête à Google s'est mal passé.", Snackbar.LENGTH_LONG).show();
 
         } else { // Autrement on continue
 
@@ -84,7 +85,7 @@ public class DownloadDrive implements Runnable {
             constructTreeLocal(activity.getExternalFilesDir(null).getAbsolutePath(), root);
 
             // Ajout d'une info de fin du download pour l'user
-            Snackbar.make(activity.getCurrentFocus(), "Fin du download", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(activity.findViewById(R.id.listeProjets), "Fin du download", Snackbar.LENGTH_LONG).show();
 
             // Permet de rafraichir l'activité aprés avoir supprimer le contenu local
             activity.finish();

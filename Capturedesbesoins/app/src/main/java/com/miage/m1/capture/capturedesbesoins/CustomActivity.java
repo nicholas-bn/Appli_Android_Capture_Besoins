@@ -60,13 +60,9 @@ public class CustomActivity extends AppCompatActivity {
         // Liaison avec le Drive
         liaisonDrive = new LiaisonDrive(this, menu);
 
-        if (liaisonDrive.isConnected()) {
-            MenuItem item = menu.findItem(R.id.drive);
-
-            item.setTitle("Déconnexion");
-        }
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -77,6 +73,32 @@ public class CustomActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.a_propos) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setTitle("À propos");
+            builder.setMessage( "\nProjet d'année de Master 1 MIAGE encadré par Monsieur CRESCENZO.\n\n" +
+                                "Membres du projet :\n" +
+                                " - Barnini Nicholas,\n" +
+                                " - Ferrero Karl,\n" +
+                                " - Valverde Thomas,\n" +
+                                " - Deï Léonard.\n");
+
+            builder.setPositiveButton("Oui.", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    return;
+                }
+            });
+
+            builder.create();
+            builder.show();
+
+            /*
+            Projet d'année de Master 1 MIAGE encadré par Monsieur CRESCENZO.
+            Membres du projet :
+             */
+
             return true;
         }
 
@@ -107,7 +129,7 @@ public class CustomActivity extends AppCompatActivity {
             // Si l'utilisateur n'est pas connecté
             if(!liaisonDrive.isConnected()){
                 Log.i("PULL FROM DRIVE", "Tentative de récupérer du drive sans connexion au compte Google");
-                Snackbar.make(this.getCurrentFocus(), "Vous devez vous connecter sur votre compte Google pour utiliser votre Drive.", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(this.findViewById(R.id.listeProjets), "Vous devez vous connecter sur votre compte Google pour utiliser votre Drive.", Snackbar.LENGTH_LONG).show();
             } else {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);

@@ -76,7 +76,8 @@ public class LiaisonDrive implements GoogleApiClient.ConnectionCallbacks,
     public void connect() {
         mGoogleApiClient.connect();
 
-        Toast.makeText(activity.getApplicationContext(), "Connecté", Toast.LENGTH_LONG).show();
+        //Toast.makeText(activity.getApplicationContext(), "Connecté", Toast.LENGTH_LONG).show();
+
     }
 
     public void disconnect() {
@@ -88,11 +89,16 @@ public class LiaisonDrive implements GoogleApiClient.ConnectionCallbacks,
                 public void onResult(Status status) {
 
                     mGoogleApiClient.disconnect();
+                    Toast.makeText(activity.getApplicationContext(), "Déconnecté", Toast.LENGTH_LONG).show();
+                    if ( ! LiaisonDrive.this.isConnected()) {
+                        MenuItem item = menu.findItem(R.id.drive);
+
+                        item.setTitle("Connexion");
+                    }
                 }
             });
 
         }
-        Toast.makeText(activity.getApplicationContext(), "Déconnecté", Toast.LENGTH_LONG).show();
     }
 
     private void signOut() {
@@ -161,6 +167,8 @@ public class LiaisonDrive implements GoogleApiClient.ConnectionCallbacks,
         item.setTitle("Déconnexion");
 
     }
+
+
 
     /**
      * It invoked when connection suspended
