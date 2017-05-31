@@ -85,7 +85,7 @@ public class GestionnaireXML {
         ArrayList<Fichier> listeFichiers = projet.getListeFichiers();
 
         // Pour chaque Fichier
-        for(Fichier fichier : listeFichiers){
+        for (Fichier fichier : listeFichiers) {
             //           <fichier>
             xmlSerializer.startTag("", BalisesXML.FICHIER.xml);
 
@@ -200,8 +200,10 @@ public class GestionnaireXML {
 
                         // Si c'est </tags>
                         if (tagName.equalsIgnoreCase(BalisesXML.TAGS.xml)) {
-                            // On spécifie le nom du Fichier
-                            fichier.setTags(texte);
+                            if (texte != null) {
+                                // On spécifie le nom du Fichier
+                                fichier.setTags(texte);
+                            }
                         }
 
                         // Si c'est </fichier>
@@ -209,6 +211,7 @@ public class GestionnaireXML {
                             // On ajoute le Fichier au Projet
                             projet.addFichier(fichier);
                         }
+                        texte = null;
                         break;
 
                     default:
