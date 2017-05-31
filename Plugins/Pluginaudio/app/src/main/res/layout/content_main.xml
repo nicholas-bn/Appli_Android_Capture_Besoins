@@ -13,11 +13,5 @@
     tools:context="com.miage.m1.capture.pluginaudio.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/textView" />
-
 
 </LinearLayout>
