@@ -14,10 +14,6 @@
     tools:showIn="@layout/activity_main"
     tools:context="com.miage.m1.capture.plugintextesimple.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
