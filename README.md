@@ -24,6 +24,6 @@ L'application devra être développé en modules. Voici la liste des principaux 
 * Thomas VALVERDE (valverd.thomas@gmail.com)
 
 
-## Guides :
-* [uti](https://docs.google.com/viewer?url=https://raw.githubusercontent.com/degoes-consulting/lambdaconf-2015/master/speakers/jdegoes/intro-purescript/presentation.pdf)
-* 
+## Différents Guides :
+* [Guide d'utilisation](https://docs.google.com/viewer?url=https://raw.githubusercontent.com/degoes-consulting/lambdaconf-2015/master/speakers/jdegoes/intro-purescript/presentation.pdf)
+* [Guide du développeur](https://docs.google.com/viewer?url=https://raw.githubusercontent.com/degoes-consulting/lambdaconf-2015/master/speakers/jdegoes/intro-purescript/presentation.pdf)
