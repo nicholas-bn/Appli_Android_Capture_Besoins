@@ -14,7 +14,7 @@ Voici la liste des fonctionnalités de l'application à ce jour :
      *	Enregistrer un fichier texte ;
      *	Charger un autre fichier texte ;
 *	Un plugin pour enregistrer du son ;
-  *	Enregistrer/écouter un son ;
+      *	Enregistrer/écouter un son ;
 *	Un plugin pour prendre une photo ;
 *	Une « galerie » listant tous les documents du projet ;
      *	Ajouter/Supprimer des tags d’un document ;
