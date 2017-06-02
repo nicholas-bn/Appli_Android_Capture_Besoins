@@ -25,5 +25,5 @@ L'application devra être développé en modules. Voici la liste des principaux 
 
 
 ## Différents Guides :
-* [Guide d'utilisation](https://docs.google.com/viewer?url=https://github.com/Barnini-Nicholas/Appli_Android_Capture_Besoins/blob/master/Documentation/Guide%20d'utilisation.pdf)
-* [Guide du développeur](https://docs.google.com/viewer?url=https://github.com/Barnini-Nicholas/Appli_Android_Capture_Besoins/blob/master/Documentation/Guide%20du%20d%C3%A9veloppeur.pdf)
+* [Guide d'utilisation](https://docs.google.com/viewer?url=https://raw.githubusercontent.com/Barnini-Nicholas/Appli_Android_Capture_Besoins/blob/master/Documentation/Guide%20d'utilisation.pdf)
+* [Guide du développeur](https://docs.google.com/viewer?url=https://raw.githubusercontent.com/Barnini-Nicholas/Appli_Android_Capture_Besoins/blob/master/Documentation/Guide%20du%20d%C3%A9veloppeur.pdf)
