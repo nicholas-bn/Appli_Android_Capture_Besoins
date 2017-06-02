@@ -1,4 +1,4 @@
-`*# Application mobile de capture des besoins informatiques d'utilisateurs non-informaticiens 
+# Application mobile de capture des besoins informatiques d'utilisateurs non-informaticiens 
 
   L'Ingénierie des Besoins (IB) est enseignée en Master MIAGE 1 de l'UNS au semestre 2. Un de ses sous-domaines consiste à recueillir (on dit aussi capturer) les besoins des utilisateurs des actuelles ou futures applications informatiques (pour faire évoluer ou développer celles-ci). Pour cela, des modèles, à base de graphiques ou de scénarios, et des logiciels ont été élaborés. 
 
