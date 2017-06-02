@@ -8,23 +8,23 @@ L'application devra être développé en modules.
 
 Voici la liste des fonctionnalités de l'application à ce jour : 
 
-	Création d’un projet ;
-	Architecture en plugins pour la création de documents ;
-	Un plugin pour créer un fichier texte ;
-o	Enregistrer un fichier texte ;
-o	Charger un autre fichier texte ;
-	Un plugin pour enregistrer du son ;
-o	Enregistrer/écouter un son ;
-	Un plugin pour prendre une photo ;
-	Une « galerie » listant tous les documents du projet ;
-o	Ajouter/Supprimer des tags d’un document ;
-o	Ouvrir le document avec le plugin adéquat ;
-o	Supprimer le document ;
-	Ajouter une description au projet ;
-	Sauvegarde des informations relatives au projet dans un fichier XML ;
-	Pouvoir se connecter à son compte Google ;
-	Pouvoir upload ses fichiers sur le drive ;
-	Pouvoir download des fichiers du Drive.
+* Création d’un projet ;
+*	Architecture en plugins pour la création de documents ;
+*	Un plugin pour créer un fichier texte ;
+**	Enregistrer un fichier texte ;
+**	Charger un autre fichier texte ;
+*	Un plugin pour enregistrer du son ;
+**	Enregistrer/écouter un son ;
+*	Un plugin pour prendre une photo ;
+*	Une « galerie » listant tous les documents du projet ;
+**	Ajouter/Supprimer des tags d’un document ;
+**	Ouvrir le document avec le plugin adéquat ;
+**	Supprimer le document ;
+*	Ajouter une description au projet ;
+*	Sauvegarde des informations relatives au projet dans un fichier XML ;
+*	Pouvoir se connecter à son compte Google ;
+*	Pouvoir upload ses fichiers sur le drive ;
+*	Pouvoir download des fichiers du Drive.
 
 
 
