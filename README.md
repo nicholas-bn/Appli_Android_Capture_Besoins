@@ -25,5 +25,5 @@ L'application devra être développé en modules. Voici la liste des principaux 
 
 
 ## Guides :
-* ![uti](https://docs.google.com/viewer?url=https://raw.githubusercontent.com/degoes-consulting/lambdaconf-2015/master/speakers/jdegoes/intro-purescript/presentation.pdf)
+* [uti](https://docs.google.com/viewer?url=https://raw.githubusercontent.com/degoes-consulting/lambdaconf-2015/master/speakers/jdegoes/intro-purescript/presentation.pdf)
 * 
