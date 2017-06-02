@@ -26,6 +26,7 @@ Voici la liste des fonctionnalités de l'application à ce jour :
 *	Pouvoir upload ses fichiers sur le drive ;
 *	Pouvoir download des fichiers du Drive.
 
+**Pour avoir un visuel de l'application, nous vous invitons à consulter le [Guide d'utilisation](https://docs.google.com/viewer?url=https://github.com/Barnini-Nicholas/Appli_Android_Capture_Besoins/blob/master/Documentation/Guide%20d'utilisation.pdf?raw=true).**
 
 
 ## Encadrant de ce projet :
