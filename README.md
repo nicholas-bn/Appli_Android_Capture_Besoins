@@ -19,59 +19,6 @@ L'application devra être développé en modules. Voici la liste des principaux 
 
 ## Liste des membres :
 * Léonard DEI
-* Nicholas BARNINI
+* Nicholas BARNINI (nicholas.barnini(at)gmail(dot)com)
 * Karl FERRERO (karl.ferrero.kf@gmail.com)
 * Thomas VALVERDE (valverd.thomas@gmail.com)
-
-## Organisation :
-Deux personnes vont s'occuper du développement du noyau de l'application.
-Les deux autres travailleront sur le développement d'un module.
-
-<a id="base"/>
-### Base de l'application
-L'application doit permettre la création de projet :
-
-![](http://i.giphy.com/bbxuvsC29ygNy.gif)
-
-<a id="google"/>
-### Connexion au compte Google
-Un utilisateur doit pouvoir se connecter à son compte Google depuis l'application. Cette connexion lui permettra de pouvoir synchroniser ses fichiers vers son Google Drive.
-
-<a id="texte"/>
-### Module de traitement de texte
-
-- Un basique
-
-On peut créer un nouveau document texte :
-
-![](http://i.giphy.com/ND8wm1zpEUunm.gif)
-
-
-On peut rouvrir un document texte :
-
-![](http://i.giphy.com/OeRArdPKuOsEg.gif)
-
-- Un utilisant l'api de Word
-(En attente...)
-
-
-<a id="image"/>
-### Module de gestion des images
-
-
-<a id="son"/>
-### Module de gestion du son
-(En cours)
-
-L'utilisateur doit pouvoir enregistrer du son.
-
-## Google Doc 
-https://docs.google.com/document/d/1FinkuqfGRDSg25VJt2I1DVw4ol1ew82M6A3E4d-ZlXs/edit
-
-### Gestion et Suivi de projet
-## Gant
-Gant au 08/03/2017
-![](https://scontent.xx.fbcdn.net/v/t35.0-12/17200826_10213023687250830_1937669843_o.png?oh=e797d4a3956622c7f6511a18c8de2fc0&oe=58C23E11)
-
-### Automate (Process d'utilisation)
-![](https://scontent.xx.fbcdn.net/v/t34.0-12/17160978_10213023945857295_1718440189_n.png?oh=fadb744ecfe5af864e4f0a3e5a5a37a7&oe=58C25572)
