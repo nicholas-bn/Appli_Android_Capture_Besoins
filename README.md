@@ -22,3 +22,8 @@ L'application devra être développé en modules. Voici la liste des principaux 
 * Nicholas BARNINI (nicholas.barnini(at)gmail(dot)com)
 * Karl FERRERO (karl.ferrero.kf@gmail.com)
 * Thomas VALVERDE (valverd.thomas@gmail.com)
+
+
+## Guides :
+* ![uti](https://docs.google.com/viewer?url=https://raw.githubusercontent.com/degoes-consulting/lambdaconf-2015/master/speakers/jdegoes/intro-purescript/presentation.pdf)
+* 
