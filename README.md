@@ -4,13 +4,27 @@
 
   Ce projet consiste à concevoir et développer une application mobile (pour ordinateurs, tablettes et smartphones Android) qui permettra à un spécialiste de recueillir les besoins sans être forcément bloqué derrière un clavier d'ordinateur. Avec sa tablette ou son smartphone, il pourra interroger les utilisateurs directement sur leur poste de travail : enregistrement audio ou vidéo, prise de notes libres, rédaction des scénarios, dessins de diagrammes, etc (tout cela ne fera pas forcément partie du projet). 
 
-L'application devra être développé en modules. Voici la liste des principaux modules à développer dans un premier temps : 
+L'application devra être développé en modules. 
 
-* Base de l'application
-* Connexion au compte Google
-* Traitement de texte
-* Image
-* Son
+Voici la liste des fonctionnalités de l'application à ce jour : 
+
+	Création d’un projet ;
+	Architecture en plugins pour la création de documents ;
+	Un plugin pour créer un fichier texte ;
+o	Enregistrer un fichier texte ;
+o	Charger un autre fichier texte ;
+	Un plugin pour enregistrer du son ;
+o	Enregistrer/écouter un son ;
+	Un plugin pour prendre une photo ;
+	Une « galerie » listant tous les documents du projet ;
+o	Ajouter/Supprimer des tags d’un document ;
+o	Ouvrir le document avec le plugin adéquat ;
+o	Supprimer le document ;
+	Ajouter une description au projet ;
+	Sauvegarde des informations relatives au projet dans un fichier XML ;
+	Pouvoir se connecter à son compte Google ;
+	Pouvoir upload ses fichiers sur le drive ;
+	Pouvoir download des fichiers du Drive.
 
 
 
