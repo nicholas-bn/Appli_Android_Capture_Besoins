@@ -1,4 +1,4 @@
-# Application mobile de capture des besoins informatiques d'utilisateurs non-informaticiens 
+`*# Application mobile de capture des besoins informatiques d'utilisateurs non-informaticiens 
 
   L'Ingénierie des Besoins (IB) est enseignée en Master MIAGE 1 de l'UNS au semestre 2. Un de ses sous-domaines consiste à recueillir (on dit aussi capturer) les besoins des utilisateurs des actuelles ou futures applications informatiques (pour faire évoluer ou développer celles-ci). Pour cela, des modèles, à base de graphiques ou de scénarios, et des logiciels ont été élaborés. 
 
@@ -11,15 +11,15 @@ Voici la liste des fonctionnalités de l'application à ce jour :
 * Création d’un projet ;
 *	Architecture en plugins pour la création de documents ;
 *	Un plugin pour créer un fichier texte ;
-**	Enregistrer un fichier texte ;
-**	Charger un autre fichier texte ;
+     *	Enregistrer un fichier texte ;
+     *	Charger un autre fichier texte ;
 *	Un plugin pour enregistrer du son ;
-**	Enregistrer/écouter un son ;
+  *	Enregistrer/écouter un son ;
 *	Un plugin pour prendre une photo ;
 *	Une « galerie » listant tous les documents du projet ;
-**	Ajouter/Supprimer des tags d’un document ;
-**	Ouvrir le document avec le plugin adéquat ;
-**	Supprimer le document ;
+     *	Ajouter/Supprimer des tags d’un document ;
+     *	Ouvrir le document avec le plugin adéquat ;
+     *	Supprimer le document ;
 *	Ajouter une description au projet ;
 *	Sauvegarde des informations relatives au projet dans un fichier XML ;
 *	Pouvoir se connecter à son compte Google ;
