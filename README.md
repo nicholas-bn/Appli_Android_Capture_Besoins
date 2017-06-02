@@ -6,11 +6,11 @@
 
 L'application devra être développé en modules. Voici la liste des principaux modules à développer dans un premier temps : 
 
-* [Base de l'application](#base)
-* [Connexion au compte Google](#google)
-* [Traitement de texte](#texte)
-* [Image](#image)
-* [Son](#son)
+* Base de l'application
+* Connexion au compte Google
+* Traitement de texte
+* Image
+* Son
 
 
 
